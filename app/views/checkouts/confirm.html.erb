@@ -1,0 +1,9 @@
+<%= form_for @order, url: wizard_path do |f| %>
+<%= f.hidden_field :subtotal, value: current_order.subtotal %>
+<%= f.hidden_field :user_id, value: @user.id %>
+
+<% @order.order_items.each do |oi| %>
+<%= oi.book.title %>
+<% end %>
+<p><%= f.button :submit %></p>
+<% end %>

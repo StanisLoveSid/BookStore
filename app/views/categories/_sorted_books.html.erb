@@ -1,0 +1,11 @@
+<p>
+<% @sorted_books.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% if book.author %>
+<%= book.author.name %>
+<% end %>
+  <% book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url %>
+  <% end %>
+<% end %>
+</p>

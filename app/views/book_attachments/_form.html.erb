@@ -1,0 +1,10 @@
+<%= image_tag @book_attachment.photo %>
+<%= form_for(@book_attachment) do |f| %>
+  <div class="field">
+    <%= f.label :photo %><br>
+    <%= f.file_field :photo %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

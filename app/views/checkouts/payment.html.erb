@@ -1,0 +1,11 @@
+<%= form_for @order, url: wizard_path do |f| %>
+<%= f.simple_fields_for :credit_card_attributes do |c| %>
+<p><%= c.input :first_name %></p>
+<p><%= c.input :last_name %></p>
+<p><%= c.input :number %></p>
+<p><%= c.input :cvv %></p>
+<p><%= c.input :year %></p>
+<p><%= c.input :month %></p>
+<% end %>
+<p><%= f.button :submit %></p>
+<% end %>

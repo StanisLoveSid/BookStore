@@ -1,0 +1,36 @@
+@media (max-width: $screen-sm) {
+  .shop-link {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  // TODO: why there a bug?
+  .container {
+    margin-left:  0;
+    margin-right: 0;
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  min-height: auto !important;
+}
+
+.img-responsive {
+  margin: auto
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+

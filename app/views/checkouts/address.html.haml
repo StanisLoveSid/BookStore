@@ -1,0 +1,12 @@
+%main.raw
+  = form_for @order, url: wizard_path do |f|
+    .raw
+      .col-md-4
+        = render partial: 'address_fields',
+          locals: { f: f, type: :billing, order: @order, user: current_user }
+      .col-md-4
+        = render partial: 'address_fields',
+          locals: { f: f, type: :shipping, order: @order, user: current_user }
+    .raw
+      .col-md-12.text-left
+        = f.submit t('save_and_continue'), class: 'btn btn-primary'

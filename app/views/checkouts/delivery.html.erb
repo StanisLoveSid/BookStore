@@ -1,0 +1,4 @@
+<%= form_for @order, url: wizard_path do |f| %>
+<%= f.collection_select :delivery_id, Delivery.all.first(3), :id, :name, :prompt => "Select a Category" %>
+<%= f.submit "Submit" %>
+<% end %>

@@ -1,0 +1,25 @@
+<%= link_to "Delete category", category_path(@category), method: :delete %>
+<% @category.books.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+
+<p>
+<%= link_to "All", controller: "categories", action: "show", filter: "All" %>
+<%= link_to "from A to Z", controller: "categories", action: "show", filter: "from A to Z" %>
+<%= link_to "from Z to A", controller: "categories", action: "show", filter: "from Z to A" %>
+<%= link_to "popular", controller: "categories", action: "show", filter: "popular" %>
+<%= link_to "newest", controller: "categories", action: "show", filter: "newest" %>
+<%= link_to "from low to high", controller: "categories", action: "show", filter: "from low to high" %>
+<%= link_to "from high to low", controller: "categories", action: "show", filter: "from high to low" %>
+</p>
+
+<div class="sorted_books2">
+<%= render 'sorted_books' %>
+</div>
+
+
+<%= link_to_next_page @sorted_books, 'Load More', remote: true, params: { filter: params[:filter] }, id: "load_more_link" %>
+
+
+
+

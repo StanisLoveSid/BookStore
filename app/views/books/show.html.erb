@@ -1,0 +1,37 @@
+  <p>
+	<%= @book.title %>
+	<%= @book.description %>
+  <%= link_to 'delete', book_path(@book.id), method: :delete %>
+  <%= link_to 'edit', edit_book_path(@book) %>
+  </p>
+
+  <% @book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url %>
+  <%= link_to "Edit Attachment", edit_book_attachment_path(photo) %>
+<% end %>
+
+  
+  	<% @book.reviews.each do |review|%>
+  	<p>
+    <% if review.approved? %>
+      <%= review.title %> 
+   <div class="star-rating" data-score= <%= review.rate %> ></div>
+      <%= review.text_of_review %>
+      <%= link_to 'delete', book_review_path(@book, review.id), method: :delete %>
+      <%= link_to 'edit', edit_book_review_path(@book, review) %>
+      <% end %>
+    </p>
+    <% end %>
+
+<script>
+    $('.star-rating').raty({
+      readOnly: true,
+      score: function() {
+            return $(this).attr('data-score');
+    }
+  });
+</script>
+  <div id="fixed"></div>
+
+  <%= render 'reviews/form' %>
+ 

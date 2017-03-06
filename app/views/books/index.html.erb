@@ -1,0 +1,29 @@
+<h3 class="text-center">books for Sale</h3>
+
+<div class="row">
+
+<h3 class="bestsellers">
+<% @sorted_books.first(4).each do |book| %>
+
+<%= link_to book.title, book_path(book) %>
+
+<% end %>
+</h3>
+
+<% @categories.each do |category| %>
+<%= link_to "#{category.name}"+"(#{category.books.count})", category_path(category) %>
+<% end %>
+  <div class="col-xs-6 col-xs-offset-3">
+
+  </div>
+</div>
+
+<div class="owl-carousel">
+    <% @books.last(3).each do |book| %>
+    <div style="margin-left: 42%;">  <%= render "book_row", book: book, order_item: @order_item %> </div>
+    <% end %>
+</div>
+
+<script>
+	$(".owl-carousel").owlCarousel({ autoPlay: 5000, items: 1 });
+</script>

@@ -1,0 +1,13 @@
+<%= form_for(@book, :html => { :multipart => true }) do |book| %>
+<%= book.text_field :title %>
+<%= book.number_field :price %>
+   <%= book.fields_for :book_attachments do |b| %>
+     <div class="field">
+       <%= b.label :photo %><br>
+       <%= b.file_field :photo, :multiple => true, name: "book_attachments[photo][]" %>
+     </div>
+   <% end %>
+<%= book.collection_select :category_id, Category.all, :id, :name, :prompt => "Select a Category" %>
+<%= book.text_field :description %>
+<%= book.submit %>
+<% end %>

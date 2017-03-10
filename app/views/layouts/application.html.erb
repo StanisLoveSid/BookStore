@@ -9,18 +9,93 @@
   </head>
 
   <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-6">
-        <h1><%= link_to "My Store", root_path %></h1>
-      </div>
-      <div class="col-xs-6 text-right">
-        <h1 class="cart-text"><%= render 'layouts/cart_text' %></h1>
-      </div>
-    </div>
-    <hr>
-    <%= yield %>
-  </div>
+<header class="navbar navbar-default">
+<div class="container">
+<div class="navbar-header">
+<button class="navbar-toggle pull-left ml-15" data-target="#navbar" data-toggle="collapse" type="button">
+<span class="sr-only"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="https://tranquil-plains-56319.herokuapp.com/">Bookstore</a>
+</div>
+<a class="shop-link pull-right" id="cart" href="https://tranquil-plains-56319.herokuapp.com/cart"><span class="shop-icon"></span>
 
-  </body>
+</a><div aria-expanded="false" class="navbar-collapse collapse pl-30" id="navbar">
+<button aria-label="Close" class="close visible-xs" data-target="#navbar" data-toggle="collapse" type="button">
+<span aria-hidden="true">×</span>
+</button>
+<ul class="nav navbar-nav">
+<li><a href="https://tranquil-plains-56319.herokuapp.com/">Home</a></li>
+<li class="dropdown">
+<a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://tranquil-plains-56319.herokuapp.com/categories">Shop</a>
+<ul class="dropdown-menu">
+<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/1">Web design</a></li>
+<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/2">Web development</a></li>
+<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/3">Photo</a></li>
+<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/4">Mobile development</a></li>
+</ul>
+</li>
+<li><a href="https://tranquil-plains-56319.herokuapp.com/users/sign_in">Log in</a></li>
+<li><a href="https://tranquil-plains-56319.herokuapp.com/users/sign_up">Sign up</a></li>
+</ul>
+</div>
+</div>
+</header>
+<main class="container">
+<%= yield %>
+</main>
+<footer class="navbar navbar-inverse mb-0">
+<div class="container">
+<div class="row">
+<div class="col-sm-9">
+<ul class="list-inline general-align mb-25">
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Home</a>
+</li>
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Shop</a>
+</li>
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Orders</a>
+</li>
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Settings</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3">
+<p class="general-nav-mail">support@bookstore.com</p>
+<p class="general-nav-number">(555)-555-5555</p>
+<ul class="list-inline general-align">
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<i aria-hidden="true" class="fa fa-facebook"></i>
+</a>
+</li>
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<i aria-hidden="true" class="fa fa-twitter"></i>
+</a>
+</li>
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<i aria-hidden="true" class="fa fa-google-plus"></i>
+</a>
+</li>
+<li>
+<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<i aria-hidden="true" class="fa fa-instagram"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+
+
+
+</body>
 </html>

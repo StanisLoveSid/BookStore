@@ -2,7 +2,7 @@ class Book < ApplicationRecord
   paginates_per 2
   belongs_to :user
   belongs_to :category
-  belongs_to :author
+  has_and_belongs_to_many :authors
   has_many :reviews, dependent: :destroy
   has_many :book_attachments, dependent: :destroy
   accepts_nested_attributes_for :book_attachments

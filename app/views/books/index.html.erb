@@ -1,28 +1,79 @@
-<h3 class="text-center">books for Sale</h3>
-
-<div class="row">
-
-<h3 class="bestsellers">
-<% @sorted_books.first(4).each do |book| %>
-
-<%= link_to book.title, book_path(book) %>
-
-<% end %>
-</h3>
-
-<% @categories.each do |category| %>
-<%= link_to "#{category.name}"+"(#{category.books.count})", category_path(category) %>
-<% end %>
-  <div class="col-xs-6 col-xs-offset-3">
-
-  </div>
-</div>
-
 <div class="owl-carousel">
-    <% @books.last(3).each do |book| %>
-    <div style="margin-left: 42%;">  <%= render "book_row", book: book, order_item: @order_item %> </div>
-    <% end %>
+<% @books.last(3).each do |book| %>
+<div class="item next left">
+<div class="row">
+<div class="col-sm-5">
+<div class="general-img-wrap">
+  <% book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img width-full" %>
+<% end %>
 </div>
+</div>
+<div class="col-sm-7">
+<div class="mb-60">
+<h1><%= book.title %></h1>
+<p class="lead"><%= book.description %></p>
+<% book.authors.each do |author| %>
+<p class="in-grey-600 small"><%= author.name %></p>
+<% end %>
+<div class="general-align pt-20">
+<%= form_for @order_item, remote: true do |f| %>
+<%= f.hidden_field :quantity, value: 1 %>
+<%= f.hidden_field :book_id, value: book.id %>
+<%= f.submit "Buy now", class: "btn btn-default" %>
+<% end %>
+</div>
+</div>
+</div>
+</div>
+</div>
+<% end %>
+</div>
+
+<div class="jumbotron text-center mb-0">
+<h2 class="h1">Welcome to our amazing Bookstore!</h2>
+<div class="mb-res-50">
+<p class="in-grey-600">We pore through hundreds of new books each month and select the five best we can find to share with our members.</p>
+</div>
+<a class="btn btn-default" href="https://tranquil-plains-56319.herokuapp.com/categories">Get Started</a>
+</div>
+<div class="mb-35">
+<h3>Best Sellers</h3>
+<% @sorted_books.first(4).each do |book| %>
+<div class="row">
+<div class="col-sm-6 col-md-3">
+<div class="general-thumb-wrap">
+<div class="thumbnail general-thumbnail">
+  <% book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img" %>
+<% end %>
+<div class="thumb-hover">
+<div class="general-thumb-link-wrap">
+<%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %>
+</a><a class="thumb-hover-link" data-remote="true" rel="nofollow" data-method="post" href="https://tranquil-plains-56319.herokuapp.com/cart/book/1"><i class="fa fa-shopping-cart thumb-icon"></i>
+</a>
+
+<%= form_for @order_item, remote: true do |f| %>
+<%= f.hidden_field :quantity, value: 1 %>
+<%= f.hidden_field :book_id, value: book.id %>
+<%= f.button class: 'fa fa-shopping-cart thumb-icon' do %> <i class="fa fa-shopping-cart thumb-icon"></i> <% end %>
+<% end %>
+</div>
+</div>
+</div>
+</div>
+<div class="general-thumb-info">
+<p class="title"><%= book.title %></p>
+<p class="font-16 in-gold-500"><%= book.price %></p>
+<span class="divider-sm"></span>
+<% book.authors.each do |author| %>
+<p class="in-grey-600 small"><%= author.name %></p>
+<% end %>
+</div>
+
+</div>
+<% end %>
+
 
 <script>
 	$(".owl-carousel").owlCarousel({ autoPlay: 5000, items: 1 });

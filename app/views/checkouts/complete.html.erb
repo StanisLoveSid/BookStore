@@ -42,7 +42,7 @@
 </th>
 <th class="col-close"></th>
 </tr>
-  <% @order.order_items.each do |order_item| %>
+  <% @user.orders.in_queue.last.order_items.each do |order_item| %>
     <%= render 'orders/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
   <% end %>
   </tbody></table> 

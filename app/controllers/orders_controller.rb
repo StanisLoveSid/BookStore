@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-  	@order = Order.find(params[:id])
+  	@order = current_user.orders.find(params[:id])
   	@order.new(order_params)
   	@order.save
   	redirect_to "/cart"

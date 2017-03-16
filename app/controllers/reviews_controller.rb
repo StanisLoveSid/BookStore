@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
 
   before_action :set_review, only: [:destroy, :edit, :update]
+  before_action :authenticate_user!, except: [:index]
 
   def edit
   	@book = Book.find(params[:book_id])
@@ -15,6 +16,7 @@ class ReviewsController < ApplicationController
   def create
     @book = Book.find(params[:book_id])
     @review = @book.reviews.new(review_params)
+    @review.user_id = current_user.id
     @review.save
     redirect_to @book
   end

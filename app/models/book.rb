@@ -1,5 +1,5 @@
 class Book < ApplicationRecord
-  paginates_per 2
+  paginates_per 4
   belongs_to :user
   belongs_to :category
   has_and_belongs_to_many :authors

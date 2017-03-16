@@ -1,11 +1,70 @@
-<%= form_for @order, url: wizard_path do |f| %>
-<%= f.simple_fields_for :credit_card_attributes do |c| %>
-<p><%= c.input :first_name %></p>
-<p><%= c.input :last_name %></p>
-<p><%= c.input :number %></p>
-<p><%= c.input :cvv %></p>
-<p><%= c.input :year %></p>
-<p><%= c.input :month %></p>
-<% end %>
-<p><%= f.button :submit %></p>
-<% end %>
+  <ul class="steps list-inline">
+<li class="step done">
+<span class="step-number">1
+</span>
+<span class="step-text hidden-xs">Address</span>
+</li>
+<li class="step-divider"></li>
+<li class="step done">
+<span class="step-number">2
+</span>
+<span class="step-text hidden-xs">Delivery</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">3</span>
+<span class="step-text hidden-xs">Payment</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">4</span>
+<span class="step-text hidden-xs">Confirm</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">5</span>
+<span class="step-text hidden-xs">Complete</span>
+</li>
+</ul>
+  <%= form_for @order, url: wizard_path, method: :put, class: 'max-600 mb-80' do |f| %>
+    <%= f.simple_fields_for :credit_card_attributes do |sf| %>
+
+<h3 class="general-subtitle">Credit Card</h3>
+<div class="form-group">
+      <%= sf.label "Card number", class: "control-label input-label"  %>
+      <%= sf.text_field :number, class: "form-control", placeholder: "Card Number" %>
+      </div>
+
+      <div class="row">
+       <div class="col-sm-6">
+        <div class="form-group">
+         <%= sf.label "Name on card", class: "control-label input-label"  %>
+         <%= sf.text_field :name, class: "form-control", placeholder: "Name on card" %>
+        </div>
+       </div>
+        <div class="col-sm-3">
+        <div class="form-group">
+         <%= sf.label "MM/YY", class: "control-label input-label"  %>
+         <%= sf.text_field :expiration_date, class: "form-control", placeholder: "MM/YY" %>
+        </div>
+       </div>
+        
+        <div class="col-sm-3">
+        <div class="form-group">
+         <%= sf.label "CVV", class: "control-label input-label"  %>
+         <%= sf.text_field :cvv, class: "form-control", placeholder: "CVV" %>
+        </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="general-text-align">
+
+    </div>
+    <div class="text-center">
+      <%= f.submit 'Save and continue', class: 'btn btn-default center-block mb-20' %>
+
+      <% end %>
+    </div>
+
+
+

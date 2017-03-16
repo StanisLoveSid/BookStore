@@ -1,11 +1,19 @@
-<%= form_for([@book, @book.reviews.build]) do |review| %>
-<%= review.text_field :title %>
-<%= review.label :rate %>
+<%= form_for([@book, @book.reviews.build], class: "max-600 mb-80" ) do |review| %>
+<div class="form-group">
+<%= review.label :rate, class: "control-label input-label" %>
    <div id="star-overall">
     <%= review.hidden_field :rate, :id=>'hint-overall' %>
   </div>
-<%= review.text_field :text_of_review %>
-<%= review.submit %>
+  </div>
+<div class="form-group">
+<%= review.label :title, class: "control-label input-label" %>
+<%= review.text_field :title, class: "form-control" %>
+</div>
+<div class="form-group">
+<%= review.label :text_of_review, class: "control-label input-label" %>
+<%= review.text_field :text_of_review, class: "form-control" %>
+</div>
+<%= review.submit class: "btn btn-default center-block mb-20" %>
 <% end %>
 
 <script>

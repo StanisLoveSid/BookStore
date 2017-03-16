@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :users
   root "books#index"
-
+ 
   resources :categories
 
   resources :books do
@@ -16,6 +16,5 @@ Rails.application.routes.draw do
   get "/cart", to: "orders#edit"
   resources :order_items, only: [:create, :update, :destroy]
   get "/order_items/:id", to: "order_items#discount"
-  get "/catalog", to: "books#catalog"
   get '/checkouts/address', to: "users#address"
 end

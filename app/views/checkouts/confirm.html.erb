@@ -1,9 +1,56 @@
+<ul class="steps list-inline">
+<li class="step active">
+<span class="step-number">1</span>
+<span class="step-text hidden-xs">Address</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">2</span>
+<span class="step-text hidden-xs">Delivery</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">3</span>
+<span class="step-text hidden-xs">Payment</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">4</span>
+<span class="step-text hidden-xs">Confirm</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">5</span>
+<span class="step-text hidden-xs">Complete</span>
+</li>
+</ul>
+
 <%= form_for @order, url: wizard_path do |f| %>
 <%= f.hidden_field :subtotal, value: current_order.subtotal %>
 <%= f.hidden_field :user_id, value: @user.id %>
 
-<% @order.order_items.each do |oi| %>
-<%= oi.book.title %>
-<% end %>
-<p><%= f.button :submit %></p>
+<table class="table table-hover">
+<tbody><tr class="no-hover">
+<th class="col-pic pl-0">
+<span class="in-grey-600">Book</span>
+</th>
+<th class="col-title"></th>
+<th class="col-price">
+<span class="in-grey-600">Price</span>
+</th>
+<th class="col-quantity">
+<span class="in-grey-600">Quantity</span>
+</th>
+<th class="col-total">
+<span class="in-grey-600">SubTotal</span>
+</th>
+<th class="col-close"></th>
+</tr>
+  <% @order.order_items.each do |order_item| %>
+    <%= render 'orders/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
+  <% end %>
+  </tbody></table> 
+<div class="text-center">
+<%= f.button :submit, class: "btn btn-default mb-20" %>
+</div>
 <% end %>

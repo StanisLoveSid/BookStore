@@ -18,27 +18,33 @@
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-<a class="navbar-brand" href="https://tranquil-plains-56319.herokuapp.com/">Bookstore</a>
+<a class="navbar-brand" href="http://localhost:3000/">Bookstore</a>
 </div>
-<a class="shop-link pull-right" id="cart" href="https://tranquil-plains-56319.herokuapp.com/cart"><span class="shop-icon"></span>
-
-</a><div aria-expanded="false" class="navbar-collapse collapse pl-30" id="navbar">
+<%= render 'layouts/cart_text' %>
+<div aria-expanded="false" class="navbar-collapse collapse pl-30" id="navbar">
 <button aria-label="Close" class="close visible-xs" data-target="#navbar" data-toggle="collapse" type="button">
 <span aria-hidden="true">×</span>
 </button>
 <ul class="nav navbar-nav">
-<li><a href="https://tranquil-plains-56319.herokuapp.com/">Home</a></li>
+<li><a href="http://localhost:3000/">Home</a></li>
 <li class="dropdown">
-<a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="https://tranquil-plains-56319.herokuapp.com/categories">Shop</a>
+<a class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
 <ul class="dropdown-menu">
-<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/1">Web design</a></li>
-<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/2">Web development</a></li>
-<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/3">Photo</a></li>
-<li><a href="https://tranquil-plains-56319.herokuapp.com/categories/4">Mobile development</a></li>
+<% Category.all.each do |category| %>
+<li>
+	<%= link_to category.name, category_path(category) %>
+</li>
+<% end %>
 </ul>
 </li>
-<li><a href="https://tranquil-plains-56319.herokuapp.com/users/sign_in">Log in</a></li>
-<li><a href="https://tranquil-plains-56319.herokuapp.com/users/sign_up">Sign up</a></li>
+<% if user_signed_in? %>
+<li>
+<%= link_to 'Log out', destroy_user_session_path, method: :delete %> 
+</li>
+<% else %>	
+<li><a href="http://localhost:3000/users/sign_in">Log in</a></li>
+<li><a href="http://localhost:3000/users/sign_up">Sign up</a></li>
+<% end %>
 </ul>
 </div>
 </div>
@@ -52,16 +58,16 @@
 <div class="col-sm-9">
 <ul class="list-inline general-align mb-25">
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Home</a>
+<a class="nav-link" href="http://localhost:3000/#">Home</a>
 </li>
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Shop</a>
+<a class="nav-link" href="http://localhost:3000/#">Shop</a>
 </li>
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Orders</a>
+<a class="nav-link" href="http://localhost:3000/#">Orders</a>
 </li>
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">Settings</a>
+<a class="nav-link" href="http://localhost:3000/#">Settings</a>
 </li>
 </ul>
 </div>
@@ -70,22 +76,22 @@
 <p class="general-nav-number">(555)-555-5555</p>
 <ul class="list-inline general-align">
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<a class="nav-link" href="http://localhost:3000/#">
 <i aria-hidden="true" class="fa fa-facebook"></i>
 </a>
 </li>
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<a class="nav-link" href="http://localhost:3000/#">
 <i aria-hidden="true" class="fa fa-twitter"></i>
 </a>
 </li>
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<a class="nav-link" href="http://localhost:3000/#">
 <i aria-hidden="true" class="fa fa-google-plus"></i>
 </a>
 </li>
 <li>
-<a class="nav-link" href="https://tranquil-plains-56319.herokuapp.com/#">
+<a class="nav-link" href="http://localhost:3000/#">
 <i aria-hidden="true" class="fa fa-instagram"></i>
 </a>
 </li>

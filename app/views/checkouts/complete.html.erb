@@ -1,2 +1,89 @@
+<ul class="steps list-inline">
+<li class="step active">
+<span class="step-number">1</span>
+<span class="step-text hidden-xs">Address</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">2</span>
+<span class="step-text hidden-xs">Delivery</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">3</span>
+<span class="step-text hidden-xs">Payment</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">4</span>
+<span class="step-text hidden-xs">Confirm</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">5</span>
+<span class="step-text hidden-xs">Complete</span>
+</li>
+</ul>
 
-<%= @user.orders.last.subtotal %>
+<table class="table table-hover">
+<tbody><tr class="no-hover">
+<th class="col-pic pl-0">
+<span class="in-grey-600">Book</span>
+</th>
+<th class="col-title"></th>
+<th class="col-price">
+<span class="in-grey-600">Price</span>
+</th>
+<th class="col-quantity">
+<span class="in-grey-600">Quantity</span>
+</th>
+<th class="col-total">
+<span class="in-grey-600">SubTotal</span>
+</th>
+<th class="col-close"></th>
+</tr>
+  <% @order.order_items.each do |order_item| %>
+    <%= render 'orders/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
+  <% end %>
+  </tbody></table> 
+
+  <div class="col-sm-8">
+<div class="general-text-right">
+<p class="in-gold-500 font-18">Order Summary</p>
+<table class="general-summary-table general-summary-table-right general-text-right">
+<tbody><tr>
+<td>
+<p class="font-16">Subtotal:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency current_user.orders.last.order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Coupon:</p>
+</td>
+<td>
+<p class="font-16"><%= current_user.orders.last.coupon %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Delivery:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency current_user.orders.last.delivery.price %> </p>
+</td>
+</tr>
+<tr>
+<td>
+<strong class="font-18">Order Total:</strong>
+</td>
+<td>
+<strong class="font-18"><%= number_to_currency current_user.orders.last.subtotal %></strong>
+</td>
+</tr>
+</tbody></table>
+</div>
+
+</div>

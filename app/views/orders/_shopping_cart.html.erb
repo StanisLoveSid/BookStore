@@ -12,16 +12,87 @@
     There are no items in your shopping cart.  Please <%= link_to "go back", root_path %> and add some items to your cart.
   </p>
 <% else %>
+<h1 class="general-title-margin">Cart</h1>
+<table class="table table-hover">
+<tbody><tr class="no-hover">
+<th class="col-pic pl-0">
+<span class="in-grey-600">Book</span>
+</th>
+<th class="col-title"></th>
+<th class="col-price">
+<span class="in-grey-600">Price</span>
+</th>
+<th class="col-quantity">
+<span class="in-grey-600">Quantity</span>
+</th>
+<th class="col-total">
+<span class="in-grey-600">SubTotal</span>
+</th>
+<th class="col-close"></th>
+</tr>
   <% @order_items.each do |order_item| %>
-    <%= render 'carts/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
+    <%= render 'orders/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
   <% end %>
+</tbody></table>  
 
-    <%= @order.subtotal %>
-  <%= form_for @order do |f| %>
-  <%= f.text_field :coupon %>
-  <%= f.hidden_field :order_id, value: @order.id %>
-  <%= f.submit 'Update cart' %>
-  <% end %>  
-  <%= link_to 'Checkout', checkouts_address_path %>
+<div class="general-order-wrap">
+<div class="row">
+<div class="col-sm-4">
+<div class="form-group general-input-group">
+<label class="control-label" for="coupon_code">Enter Your Coupon Code</label>
+</div>
+<div>
+<%= form_for @order do |f|%>
+<%= f.text_field :coupon, class: "form-control" %>
+<%= f.submit class: 'btn btn-primary mt-30 mb-15 res-block' %>
+<% end %>
+</div>
+</div>
+<div class="col-sm-8">
+<div class="general-text-right">
+<p class="in-gold-500 font-18">Order Summary</p>
+<table class="general-summary-table general-summary-table-right general-text-right">
+<tbody><tr>
+<td>
+<p class="font-16">Subtotal:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency @order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Coupon:</p>
+</td>
+<td>
+<p class="font-16"><%= current_order.coupon %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Delivery:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency current_order.delivery.price %> </p>
+</td>
+</tr>
+<tr>
+<td>
+<strong class="font-18">Order Total:</strong>
+</td>
+<td>
+<strong class="font-18"><%= number_to_currency current_order.subtotal %></strong>
+</td>
+</tr>
+</tbody></table>
+</div>
+
+</div>
+</div>
+</div>
+
+<%= link_to checkouts_path(:address) do %>
+  <button class="btn btn-default mb-20 hidden-xs center-block">Checkout</button>
+<% end %>
 
 <% end %>

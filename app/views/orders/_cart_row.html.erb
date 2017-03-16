@@ -1,33 +1,41 @@
-<div class="well">
-
-  <div class="row">
-    <div class="col-xs-8">
-      <h4><%= book.title %></h4>
-    </div>
-    <div class="col-xs-4">
-
-      <%= form_for order_item, remote: true do |f| %>
-        <h4 class="text-right">Unit Price: <span style="color: green"><%= number_to_currency order_item.unit_price %></span></h4>
-        <div class="row">
-          <div class="col-xs-4">
-            <%= f.number_field :quantity, value: order_item.quantity.to_i, class: "form-control", min: 1 %>
-            <%= f.hidden_field :book_id, value: book.id %>
-          </div>
-          <div class="col-xs-8 text-right">
-            <div class="btn-group">
-              
-              <%= f.submit "Update Quantity", class: "btn btn-primary" %>
-              <%= link_to "Delete", order_item, { data: { confirm: "Are you sure you wish to delete the book '#{order_item.book.title}' from your cart?" }, method: :delete, remote: true, class: "btn btn-danger" } %>
-        <%= link_to "Discount", controller: "order_items", action: "discount", id: order_item %>
-
-
-            </div>
-          </div>
-        </div>
-        <h4 class="text-right">Total Price: <span style="color: green"><%= number_to_currency order_item.total_price %></span></h4>
-      <% end %>
-
-    </div>
-
-  </div>
+<tr>
+<td>
+<div class="general-img-wrap-table">
+  <% book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "cart-img-shadow pull-left width-full" %>
+<% end %>
 </div>
+</td>
+<td>
+<p class="general-title"><%= book.title %></p>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.unit_price %></span>
+</td>
+<td>
+<div class="input-group general-position">
+<%= form_for order_item, remote: true do |f| %>
+<a class="input-link" onclick="decrementValue()">
+<i class="fa fa-minus line-height-40"></i>
+</a>
+<%= f.text_field :quantity, class: "form-control quantity-input", id: "quantity" %>
+<a class="input-link" onclick="incrementValue()">
+<i class="fa fa-plus line-height-40"></i>
+</a>
+<%= f.hidden_field :book_id, value: book.id %>
+<%= f.submit "Update Quantity", class: "btn btn-primary" %>
+<% end %>
+</div>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.total_price %></span>
+</td>
+<td>
+<%= link_to order_item, method: :delete, remote: true, class: "close general-cart-close" do %><span aria-hidden="true">×</span><% end %>
+</td>
+</tr>
+
+
+
+
+

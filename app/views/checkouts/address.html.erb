@@ -1,0 +1,123 @@
+<main class="container">
+  <h1 class="general-title-margin">Checkout</h1>
+  <ul class="steps list-inline">
+    <li class="step active">
+      <span class="step-number">1</span>
+      <span class="step-text hidden-xs">Address</span>
+    </li>
+    <li class="step-divider"></li>
+    <li class="step">
+      <span class="step-number">2</span>
+      <span class="step-text hidden-xs">Delivery</span>
+    </li>
+    <li class="step-divider"></li>
+    <li class="step">
+      <span class="step-number">3</span>
+      <span class="step-text hidden-xs">Payment</span>
+    </li>
+    <li class="step-divider"></li>
+    <li class="step">
+      <span class="step-number">4</span>
+      <span class="step-text hidden-xs">Confirm</span>
+    </li>
+    <li class="step-divider"></li>
+    <li class="step">
+      <span class="step-number">5</span>
+      <span class="step-text hidden-xs">Complete</span>
+    </li>
+  </ul>
+  <%= form_for @user, url: wizard_path, method: :put, html: { class: "res-mb-100" } do |f| %>
+    <div class="hidden-xs hidden-sm">
+      <div class="row">
+        <div class="col-md-5">
+          <h3 class="general-subtitle">Billing Address</h3>
+          <p class="general-info-text">all fields are required</p>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+          <h3 class="general-subtitle">Shipping Address</h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-5 mb-40">
+        <div class="visible-xs visible-sm">
+          <h3 class="general-subtitle">Billing Address</h3>
+          <p class="general-info-text">all fields are required</p>
+        </div>
+<div class="form-group">
+  <%= f.label :first_name, "First Name", class: "control-label input-label" %>
+  <%= f.text_field :first_name, class: "form-control", placeholder: "First Name" %>
+</div>
+<div class="form-group">
+  <%= f.label :last_name, "Last Name", class: "control-label input-label" %>
+  <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name" %>
+</div>
+<div class="form-group">
+  <%= f.label :address, "Address", class: "control-label input-label" %>
+  <%= f.text_field :address, class: "form-control", placeholder: "Address" %>
+</div>
+<div class="form-group">
+  <%= f.label :city, "City", class: "control-label input-label" %>
+  <%= f.text_field :city, class: "form-control", placeholder: "City" %>
+</div>
+<div class="form-group">
+  <%= f.label :zipcode, "Zip", class: "control-label input-label" %>
+  <%= f.text_field :zipcode, class: "form-control", placeholder: "Zip" %>
+</div>
+<div class="form-group">
+  <%= f.label :country, "Country", class: "control-label input-label" %>
+  <%= f.text_field :country, class: "form-control", placeholder: "Country" %>
+</div>
+<div class="form-group">
+  <%= f.label :phone, "Phone", class: "control-label input-label" %>
+  <%= f.telephone_field :phone, class: "form-control", placeholder: "Example +355 66 123 4567" %>
+</div>
+
+      </div>
+      <div class="col-md-5 col-md-offset-1 mb-60" id="shipping-address">
+        <div class="visible-xs visible-sm">
+          <h3 class="general-subtitle">Shipping Address</h3>
+        </div>
+      </div>
+    </div>
+    <div class="general-text-align mb-60">
+      <p class="in-gold-500 font-18">Order Summary</p>
+      <table class="general-summary-table">
+        <tr>
+          <td>
+            <p class="font-16">Item Total:</p>
+          </td>
+          <td>
+            <p class="font-16">
+              <%= current_order.subtotal %>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong class="font-18">Order Total:</strong>
+          </td>
+          <td>
+            <strong class="font-18">
+              <%= current_order.subtotal %>
+            </strong>
+          </td>
+        </tr>
+      </table>
+        <%= f.submit "Save and Continue", class: "btn btn-default center-block mb-20" %>
+    </div>
+  <% end %>
+</main>
+<script>
+  
+  $(function(){
+    $('.checkbox-input').click(function() {
+      if ($("#shipping-address .form-control").prop('disabled')) {
+        $("#shipping-address .form-control").removeAttr('disabled', true);
+      } else {
+          $("#shipping-address .form-control").prop('disabled', true);
+      }
+    });
+  });
+
+</script>

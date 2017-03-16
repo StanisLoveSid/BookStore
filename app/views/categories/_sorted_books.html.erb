@@ -1,15 +1,32 @@
-<p>
-<% @sorted_books.each do |book| %>
-<%= link_to book.title, book_path(book) %>
-<% if book.authors %>
-<% book.authors.each do |a| %>
-<%= a.name %>
-<%= a.bio %>
-<% end %>
-<% end %>
+<% @sorted_books.each_slice(4) do |slice| %>
+<div class="row">
+<% slice.each do |book| %>
+<div class="col-sm-6 col-md-3">
+<div class="general-thumb-wrap">
+<div class="thumbnail general-thumbnail">
   <% book.book_attachments.each do |photo| %>
-  <%= image_tag photo.photo_url %>
-  <% end %>
+  <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img" %>
+<% end %>
+<div class="thumb-hover">
+<div class="general-thumb-link-wrap">
+<%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %>
+</div>
+</div>
+</div>
+</div>
+<div class="general-thumb-info">
+<p class="title"><%= book.title %></p>
+<p class="font-16 in-gold-500"><%= book.price %></p>
+<span class="divider-sm"></span>
+<p class="in-grey-600 small">
+<% book.authors.each do |author| %>
+<%= author.name %>, 
 <% end %>
 </p>
+</div>
+
+</div>
+
+<% end %>
+<% end %>
 

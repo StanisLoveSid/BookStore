@@ -1,5 +1,6 @@
 <div class="owl-carousel">
 <% @books.last(3).each do |book| %>
+<div class="carousel">
 <div class="item next left">
 <div class="row">
 <div class="col-sm-5">
@@ -21,6 +22,7 @@
 <%= f.hidden_field :quantity, value: 1 %>
 <%= f.hidden_field :book_id, value: book.id %>
 <%= f.submit "Buy now", class: "btn btn-default" %>
+</div>
 <% end %>
 </div>
 </div>
@@ -35,7 +37,7 @@
 <div class="mb-res-50">
 <p class="in-grey-600">We pore through hundreds of new books each month and select the five best we can find to share with our members.</p>
 </div>
-<a class="btn btn-default" href="https://tranquil-plains-56319.herokuapp.com/categories">Get Started</a>
+<a class="btn btn-default" href="http://localhost:3000/categories/12?filter=All">Get Started</a>
 </div>
 <div class="mb-35">
 <h3>Best Sellers</h3>
@@ -49,15 +51,9 @@
 <% end %>
 <div class="thumb-hover">
 <div class="general-thumb-link-wrap">
-<%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %>
-</a><a class="thumb-hover-link" data-remote="true" rel="nofollow" data-method="post" href="https://tranquil-plains-56319.herokuapp.com/cart/book/1"><i class="fa fa-shopping-cart thumb-icon"></i>
-</a>
-
-<%= form_for @order_item, remote: true do |f| %>
-<%= f.hidden_field :quantity, value: 1 %>
-<%= f.hidden_field :book_id, value: book.id %>
-<%= f.button class: 'fa fa-shopping-cart thumb-icon' do %> <i class="fa fa-shopping-cart thumb-icon"></i> <% end %>
-<% end %>
+<%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %> 
+<%= link_to({controller: 'order_items', action: "create", order_item: {quantity: 1, book_id: book.id}}, class: 'thumb-hover-link', method: :post, remote: true) do %>
+<i class="fa fa-shopping-cart thumb-icon"></i> <% end %>
 </div>
 </div>
 </div>
@@ -66,9 +62,11 @@
 <p class="title"><%= book.title %></p>
 <p class="font-16 in-gold-500"><%= book.price %></p>
 <span class="divider-sm"></span>
+<p class="in-grey-600 small">
 <% book.authors.each do |author| %>
-<p class="in-grey-600 small"><%= author.name %></p>
+<%= author.name %>, 
 <% end %>
+</p>
 </div>
 
 </div>

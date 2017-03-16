@@ -1,37 +1,136 @@
-  <p>
-	<%= @book.title %>
-	<%= @book.description %>
-  <%= link_to 'delete', book_path(@book.id), method: :delete %>
-  <%= link_to 'edit', edit_book_path(@book) %>
-  </p>
+<%= link_to :back, class: 'general-back-link' do %>
+<i class="fa fa-long-arrow-left mr-15"></i>
+Back to results
+<% end %>
+<div class="row">
+<div class="col-sm-6">
+<div class="product-gallery">
+<div class="mb-20">
+  <% @book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "img-responsive img-shadow" %>
+<% end %>
+</div>
+</div>
+</div>
+<div class="col-sm-6">
+<h1 class="mt-res-0"><%= @book.title %></h1>
+<p class="in-grey-600 small"></p>
+<div class="row">
+<div class="col-xs-12 col-md-4">
+<p class="h1 in-gold-500 mt-10"><%= @book.price.to_d %></p>
+</div>
 
-  <% @book_attachments.each do |photo| %>
-  <%= image_tag photo.photo_url %>
-  <%= link_to "Edit Attachment", edit_book_attachment_path(photo) %>
+
+
+<%= form_for @book.order_items.new, remote: true do |f| %>
+<div class="col-xs-5 col-md-3">
+<div class="input-group general-position">
+<a class="input-link" onclick="decrementValue()" >
+<i class="fa fa-minus line-height-40"></i>
+</a>
+<%= f.text_field :quantity, class: "form-control quantity-input", id: "quantity" %>
+<a class="input-link" onclick="incrementValue()">
+<i class="fa fa-plus line-height-40"></i>
+</a>
+</div>
+</div>
+<%= f.hidden_field :book_id, value: @book.id %>
+<div class="col-xs-7 col-md-5">
+<%= f.submit "Buy now", class: "btn btn-default pull-right general-position" %>
+</div>
 <% end %>
 
-  
-  	<% @book.reviews.each do |review|%>
-  	<p>
-    <% if review.approved? %>
-      <%= review.title %> 
-   <div class="star-rating" data-score= <%= review.rate %> ></div>
-      <%= review.text_of_review %>
-      <%= link_to 'delete', book_review_path(@book, review.id), method: :delete %>
-      <%= link_to 'edit', edit_book_review_path(@book, review) %>
-      <% end %>
-    </p>
-    <% end %>
+</div>
 
-<script>
-    $('.star-rating').raty({
-      readOnly: true,
-      score: function() {
-            return $(this).attr('data-score');
-    }
-  });
-</script>
-  <div id="fixed"></div>
+<div class="general-info-wrap divider-lg">
+<p>Description</p>
+<p class="in-grey-600 small line-height-2" data-readmore="true" data-readmore-class="in-gold-500 ml-10" data-readmore-moretext="Read More"><%= @book.description %><a href="https://tranquil-plains-56319.herokuapp.com/books/30#" class="in-gold-500 ml-10">Read More</a></p>
+</div>
+<div class="general-info-wrap divider-lg">
+<div class="clearfix">
+<p class="pull-left">Year of publication</p>
+<p class="in-grey-600 small pull-right"><%= @book.year_of_publication %></p>
+</div>
+</div>
+<div class="general-info-wrap divider-lg">
+<div class="clearfix">
+<p class="pull-left">Dimensions</p>
+<p class="in-grey-600 small pull-right"><%= @book.demensions %></p>
+</div>
+</div>
+<div class="general-info-wrap divider-lg">
+<div class="clearfix">
+<p class="pull-left">Materials</p>
+<p class="in-grey-600 small pull-right"><%= @book.materials %></p>
+</div>
+</div>
+</div>
+</div>
 
+
+<div class="mb-80">
+<h3 class="in-gold-500 mb-25">Reviews (<%= @book.reviews.approved.size %>)</h3>
+<ul class="media-list">
+<% @book.reviews.approved.each do |review| %>
+<li class="media card">
+<div class="media-left">
+<span class="img-circle logo-size logo-empty media-object">
+<% if review.user.first_name.nil?  %>
+U
+<% else %>
+<%= review.user.first_name.first.capitalize %>
+<% end %>
+</span>
+</div>
+<div class="media-body">
+<div>
+<p class="general-message-date hidden-xs">
+<%= review.updated_at.year %>/
+<%= review.updated_at.month %>/
+<%= review.updated_at.day %>	
+</p>
+<h4 class="media-heading max-240 general-message-name">
+<span class="general-message-verified">Verified Reviewer </span>
+<% if review.user.first_name.nil?  %>
+U
+<% else %>
+<%= review.user.first_name %>
+<% end %>
+</h4>
+</div>
+<div class="mb-15">
+<% review.rate.times do %>
+<i class="fa fa-star rate-star"></i>
+<% end %>
+<% (5 - review.rate).times do %>
+<i class="fa fa-star rate-star rate-empty"></i>
+<% end %>
+</div>
+<p><%= review.title %></p>
+<p><%= review.text_of_review %></p>
+</div>
+</li>
+<% end %>
+</ul>
+</div>
+ 
   <%= render 'reviews/form' %>
  
+  <script>
+	function incrementValue()
+{
+    var value = parseInt(document.getElementById('quantity').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    document.getElementById('quantity').value = value;
+}
+
+	function decrementValue()
+{
+    var value = parseInt(document.getElementById('quantity').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value--;
+    document.getElementById('quantity').value = value;
+}
+
+</script>

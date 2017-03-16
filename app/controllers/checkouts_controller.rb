@@ -16,8 +16,7 @@ class CheckoutsController < ApplicationController
     @user = current_user
     case step
     when :address
-      @form = AddressForm.from_params(params)
-      AddCheckoutAddresses.call(@form, params)
+      @user.update(user_params)
     when :payment
       @form = CreditCardForm.from_params(params)
       AddCheckoutPayment.call(@form, params)

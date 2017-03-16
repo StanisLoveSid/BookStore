@@ -1,4 +1,94 @@
-<%= form_for @order, url: wizard_path do |f| %>
-<%= f.collection_select :delivery_id, Delivery.all.first(3), :id, :name, :prompt => "Select a Category" %>
-<%= f.submit "Submit" %>
-<% end %>
+<h1 class="general-title-margin">Checkout</h1>
+<ul class="steps list-inline">
+<li class="step active">
+<span class="step-number">1</span>
+<span class="step-text hidden-xs">Address</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">2</span>
+<span class="step-text hidden-xs">Delivery</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">3</span>
+<span class="step-text hidden-xs">Payment</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">4</span>
+<span class="step-text hidden-xs">Confirm</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">5</span>
+<span class="step-text hidden-xs">Complete</span>
+</li>
+</ul>
+
+  <h3 class="general-subtitle">
+    <%= t('shipping_method') %>
+  </h3>
+  <div class="hidden-xs mb-res-50">
+    <%= form_for @order, url: wizard_path, method: :put, class: 'res-mb-100' do |f| %>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="col-method">
+              <span class="in-grey-600 ml-40">
+                <%= t('delivery.title') %>
+              </span>
+            </th>
+            <th>
+              <span class="in-grey-600">
+                <%= t('delivery.days') %>
+              </span>
+            </th>
+            <th>
+              <span class="in-grey-600">
+                <%= t('delivery.price') %>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Delivery.all.first(3).each do |delivery| %>
+            <tr>
+              <td>
+                <div class="form-group radio mt-0 mb-0">
+                  <label class="radio-label">
+                    <%= f.radio_button :delivery_id, delivery.id, class: 'radio-input', hidden: true %>
+                      
+                    
+                    <span class="radio-icon"></span>
+                    <span class="radio-text">
+                      <%= delivery.name %>
+                    </span>
+                  </label>
+                </div>
+              </td>
+              <td>
+                <span>
+                  4
+                </span>
+              </td>
+              <td>
+                <span class="font-16 in-gold-500">
+                  <%= delivery.price %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="general-text-align">
+
+      </div>
+      <div class="text-center">
+        <%= f.submit "Save and continue", class: 'btn btn-default center-block mb-20' %>
+        
+      </div>
+    <% end %>
+  </div>
+
+

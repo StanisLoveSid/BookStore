@@ -25,6 +25,29 @@
 </li>
 </ul>
 
+<div class="row mb-20">
+<div class="col-sm-3">
+<h3 class="general-subtitle">Shipping Address</h3>
+<%= link_to 'edit', wizard_path(:address), class: 'general-edit' %>
+<p class="general-address"><%= current_user.first_name + current_user.last_name %><br><%= current_user.address %><br><%= current_user.city %><br><%= current_user.country %><br><%= current_user.phone %></p>
+</div>
+<div class="col-sm-3">
+<h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.billing_address">Billing Address</span></h3>
+<a class="general-edit" href="#">edit</a>
+<p class="general-address">ffdsf ddfgdfg<br>Turbo street, 1<br>Dnipro<br>Ukraine<br>Phone +380 77 777 7707</p>
+</div>
+<div class="col-sm-3">
+<h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.shipments">Shipments</span></h3>
+<%= link_to 'edit', wizard_path(:delivery), class: 'general-edit' %>
+<p class="general-address"><%= number_to_currency current_order.delivery.price %><br><%= current_order.delivery.name %></p>
+</div>
+<div class="col-sm-3">
+<h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.payment_information">Payment Information</span></h3>
+<%= link_to 'edit', wizard_path(:payment), class: 'general-edit' %>
+<p class="general-address"><%= current_user.credit_cards.last.number %><br><%= current_user.credit_cards.last.expiration_date %></p>
+</div>
+</div>
+
 <%= form_for @order, url: wizard_path do |f| %>
 <%= f.hidden_field :subtotal, value: current_order.subtotal %>
 <%= f.hidden_field :user_id, value: @user.id %>
@@ -47,9 +70,66 @@
 <th class="col-close"></th>
 </tr>
   <% @order.order_items.each do |order_item| %>
-    <%= render 'orders/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
+
+<tr>
+<td>
+<div class="general-img-wrap-table">
+  <% order_item.book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "cart-img-shadow pull-left width-full" %>
+<% end %>
+</div>
+</td>
+<td>
+<p class="general-title"><%= order_item.book.title %></p>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.unit_price %></span>
+</td>
+<td>
+<div class="input-group general-position">
+<%= order_item.quantity %>
+</div>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.total_price %></span>
+</td>
+</tr>
   <% end %>
   </tbody></table> 
+  <div class="row">
+<div class="col-sm-12">
+<div class="general-text-right">
+<p class="in-gold-500 font-18">Order Summary</p>
+<table class="general-summary-table general-summary-table-right general-text-right">
+<tbody><tr>
+<td>
+<p class="font-16">Subtotal:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency (current_order.subtotal - current_order.delivery.price) %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Delivery:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency current_order.delivery.price %> </p>
+</td>
+</tr>
+<tr>
+<td>
+<strong class="font-18">Order Total:</strong>
+</td>
+<td>
+<strong class="font-18"><%= number_to_currency current_order.subtotal %></strong>
+</td>
+</tr>
+</tbody></table>
+</div>
+
+</div>
+</div>
 <div class="text-center">
 <%= f.button :submit, class: "btn btn-default mb-20" %>
 </div>

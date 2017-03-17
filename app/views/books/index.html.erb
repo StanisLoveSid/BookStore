@@ -13,7 +13,20 @@
 <div class="col-sm-7">
 <div class="mb-60">
 <h1><%= book.title %></h1>
-<p class="lead"><%= book.description %></p>
+<p class="lead">
+<% if book.description.length > 250 %>
+    <%= truncate(book.description, length: 250) %>
+    <%= link_to '...Read more', '', class: "read-more-#{book.id}" %>
+    <script>
+      $('.read-more-<%= book.id %>').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript book.description %>')
+      })
+    </script>
+  <% else %>
+    <%= book.description %>
+  <% end %>
+</p>
 <% book.authors.each do |author| %>
 <p class="in-grey-600 small"><%= author.name %></p>
 <% end %>
@@ -60,7 +73,7 @@
 </div>
 <div class="general-thumb-info">
 <p class="title"><%= book.title %></p>
-<p class="font-16 in-gold-500"><%= book.price %></p>
+<p class="font-16 in-gold-500"><%= number_to_currency book.price %></p>
 <span class="divider-sm"></span>
 <p class="in-grey-600 small">
 <% book.authors.each do |author| %>

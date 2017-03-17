@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170311235326) do
+ActiveRecord::Schema.define(version: 20170317205221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(version: 20170311235326) do
     t.string   "addressable_type"
     t.integer  "addressable_id"
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", using: :btree
+  end
+
+  create_table "authentication_providers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_name_on_authentication_providers", using: :btree
   end
 
   create_table "authors", force: :cascade do |t|
@@ -85,10 +92,11 @@ ActiveRecord::Schema.define(version: 20170311235326) do
     t.integer  "month"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "user_id"
     t.integer  "order_id"
+    t.integer  "expiration_date"
     t.index ["order_id"], name: "index_credit_cards_on_order_id", using: :btree
     t.index ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
   end
@@ -96,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170311235326) do
   create_table "deliveries", force: :cascade do |t|
     t.string  "name"
     t.decimal "price"
+    t.string  "days"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -145,6 +154,19 @@ ActiveRecord::Schema.define(version: 20170311235326) do
     t.integer  "rate"
     t.index ["book_id"], name: "index_reviews_on_book_id", using: :btree
     t.index ["user_id"], name: "index_reviews_on_user_id", using: :btree
+  end
+
+  create_table "user_authentications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "authentication_provider_id"
+    t.string   "uid"
+    t.string   "token"
+    t.datetime "token_expires_at"
+    t.text     "params"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["authentication_provider_id"], name: "index_user_authentications_on_authentication_provider_id", using: :btree
+    t.index ["user_id"], name: "index_user_authentications_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

@@ -44,7 +44,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2017-03-07 00:36:24 +0200'>2017-03-07 00:36:24 +0200</time>
+          Updated <time class='js-timeago' datetime='2017-03-16 23:50:27 +0200'>2017-03-16 23:50:27 +0200</time>
         
       </span>
     </div>
@@ -65,12 +65,12 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">21</span><small> lines of codes</small></div>
+              <div><span class="metric">20</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">1</span><small> loc/method</small></div>
+              <div><span class="metric">2</span><small> loc/method</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">2</span><small> complexity</small></div>
@@ -101,7 +101,7 @@
   devise_for :users
   resources :users
   root &quot;books#index&quot;
-
+ 
   resources :categories
 
   resources :books do
@@ -112,7 +112,6 @@
   get &quot;/cart&quot;, to: &quot;orders#edit&quot;
   resources :order_items, only: [:create, :update, :destroy]
   get &quot;/order_items/:id&quot;, to: &quot;order_items#discount&quot;
-  get &quot;/catalog&quot;, to: &quot;books#catalog&quot;
   get &#39;/checkouts/address&#39;, to: &quot;users#address&quot;
 end
 </code>

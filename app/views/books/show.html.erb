@@ -17,7 +17,7 @@ Back to results
 <p class="in-grey-600 small"></p>
 <div class="row">
 <div class="col-xs-12 col-md-4">
-<p class="h1 in-gold-500 mt-10"><%= @book.price.to_d %></p>
+<p class="h1 in-gold-500 mt-10"><%= number_to_currency @book.price %></p>
 </div>
 
 
@@ -44,7 +44,20 @@ Back to results
 
 <div class="general-info-wrap divider-lg">
 <p>Description</p>
-<p class="in-grey-600 small line-height-2" data-readmore="true" data-readmore-class="in-gold-500 ml-10" data-readmore-moretext="Read More"><%= @book.description %><a href="https://tranquil-plains-56319.herokuapp.com/books/30#" class="in-gold-500 ml-10">Read More</a></p>
+<p class="in-grey-600 small line-height-2" >
+  <% if @book.description.length > 250 %>
+    <%= truncate(@book.description, length: 250) %>
+    <%= link_to '...Read more', '', class: "read-more-#{@book.id}" %>
+    <script>
+      $('.read-more-<%= @book.id %>').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript @book.description %>')
+      })
+    </script>
+  <% else %>
+    <%= @book.description %>
+  <% end %>
+</p>
 </div>
 <div class="general-info-wrap divider-lg">
 <div class="clearfix">

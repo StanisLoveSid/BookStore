@@ -44,7 +44,7 @@
     <div class="file-time">
       <span class="committed-at">
         
-          Updated <time class='js-timeago' datetime='2017-03-10 10:07:30 +0200'>2017-03-10 10:07:30 +0200</time>
+          Updated <time class='js-timeago' datetime='2017-03-16 23:50:27 +0200'>2017-03-16 23:50:27 +0200</time>
         
       </span>
     </div>
@@ -65,15 +65,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">185</span><small> lines of codes</small></div>
+              <div><span class="metric">187</span><small> lines of codes</small></div>
               <div><span class="metric">0</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
               <div><span class="metric">N/A</span><small> complexity/method</small></div>
-              <div><span class="metric">2</span><small> loc/method</small></div>
+              <div><span class="metric">3</span><small> loc/method</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">173</span><small> complexity</small></div>
+              <div><span class="metric">176</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -106,7 +106,7 @@
 #
 # It&#39;s strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170311235326) do
+ActiveRecord::Schema.define(version: 20170317161931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension &quot;plpgsql&quot;
@@ -181,10 +181,11 @@ ActiveRecord::Schema.define(version: 20170311235326) do
     t.integer  &quot;month&quot;
     t.string   &quot;first_name&quot;
     t.string   &quot;last_name&quot;
-    t.datetime &quot;created_at&quot;, null: false
-    t.datetime &quot;updated_at&quot;, null: false
+    t.datetime &quot;created_at&quot;,      null: false
+    t.datetime &quot;updated_at&quot;,      null: false
     t.integer  &quot;user_id&quot;
     t.integer  &quot;order_id&quot;
+    t.integer  &quot;expiration_date&quot;
     t.index [&quot;order_id&quot;], name: &quot;index_credit_cards_on_order_id&quot;, using: :btree
     t.index [&quot;user_id&quot;], name: &quot;index_credit_cards_on_user_id&quot;, using: :btree
   end
@@ -192,6 +193,7 @@ ActiveRecord::Schema.define(version: 20170311235326) do
   create_table &quot;deliveries&quot;, force: :cascade do |t|
     t.string  &quot;name&quot;
     t.decimal &quot;price&quot;
+    t.string  &quot;days&quot;
   end
 
   create_table &quot;order_items&quot;, force: :cascade do |t|

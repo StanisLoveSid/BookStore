@@ -32,6 +32,7 @@ gem 'haml'
 gem 'bootstrap-sass'
 gem 'owlcarousel-rails'
 gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
+gem 'domp'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -62,3 +63,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'omniauth'
+gem 'omniauth-facebook'

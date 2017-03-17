@@ -37,13 +37,7 @@ class Order < ApplicationRecord
     price = order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum
     if_discount = coupon == '1111' ? price/4 : price
     delivery.price = 0 if order_items.size == 0 && !delivery.nil?
-    case !delivery.nil?
-    when delivery.name == 'UPS Ground' then if_discount += delivery.price
-    when delivery.name == 'UPS Two Day' then if_discount += delivery.price
-    when delivery.name == 'UPS One Day' then if_discount += delivery.price
-    else
-      if_discount
-    end
+    if_discount += delivery.price if !delivery.nil?
   end
 
 

@@ -70,12 +70,12 @@
               </td>
               <td>
                 <span>
-                  4
+                  <%= delivery.days %>
                 </span>
               </td>
               <td>
                 <span class="font-16 in-gold-500">
-                  <%= delivery.price %>
+                  <%= number_to_currency delivery.price %>
                 </span>
               </td>
             </tr>
@@ -85,10 +85,32 @@
       <div class="general-text-align">
 
       </div>
-      <div class="text-center">
-        <%= f.submit "Save and continue", class: 'btn btn-default center-block mb-20' %>
-        
-      </div>
+    <div class="general-text-align mb-60">
+      <p class="in-gold-500 font-18">Order Summary</p>
+      <table class="general-summary-table">
+        <tr>
+          <td>
+            <p class="font-16">Item Total:</p>
+          </td>
+          <td>
+            <p class="font-16">
+              <%= number_to_currency current_order.subtotal %>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong class="font-18">Order Total:</strong>
+          </td>
+          <td>
+            <strong class="font-18">
+              <%= number_to_currency current_order.subtotal %>
+            </strong>
+          </td>
+        </tr>
+      </table>
+        <%= f.submit "Save and Continue", class: "btn btn-default center-block mb-20" %>
+    </div>
     <% end %>
   </div>
 

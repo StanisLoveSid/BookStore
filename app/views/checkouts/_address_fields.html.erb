@@ -1,0 +1,22 @@
+
+  <%= simple_fields_for "#{type}" do |s| %>
+    <%= s.simple_fields_for :address do |a| %>
+      <%= a.hidden_field :addressable_type, value: "order_#{type}" %>
+      <%= a.hidden_field :addressable_id, value: order.id %>
+      <% [:first_name, :last_name, :address, :city, :zipcode].each do |field| %>
+      <div class="form-group">
+        <%= a.input field, input_html: { value: fill_address(user, order, type, field), class: 'form-control' } %>
+        </div>
+      <% end %>
+      <div class="form-group">
+      <%= a.input :phone, input_html: { value: fill_address(user, order, type, :phone), class: 'form-control' }, placeholder: '+380971112233'%>
+      </div>
+    <% end %>
+  <% end %>
+  <% if type == :shipping %>
+    <%= f.fields_for :use_billing do |sb| %>
+      <%= sb.check_box :allow, checked: true %>
+      <%= t('use_billing') %>
+    <% end %>
+  <% end %>
+

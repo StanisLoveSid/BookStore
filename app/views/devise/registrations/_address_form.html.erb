@@ -1,0 +1,15 @@
+  <%= simple_form_for :address, method: :patch, html: { id: "#{type}_address" } do |f| %>
+    <%= f.hidden_field :addressable_type, value: type %>
+    <%= f.hidden_field :addressable_id, value: user.public_send(type).try(:addressable_id) %>
+    <% [:first_name, :last_name, :address, :city, :zipcode].each do |field| %>
+    <div class="form-group">
+      <%= f.input field, input_html: { value: user.public_send(type).try(field), class: 'form-control'} %>
+      </div>
+    <% end %>
+    <div class="form-group">
+    <%= f.input :phone, input_html: { value: user.public_send(type).try(:phone), class: 'form-control' },placeholder: '+380971112233' %>
+    </div>
+    <div class="text-center">
+      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    </div>
+  <% end %>

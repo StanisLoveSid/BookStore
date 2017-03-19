@@ -1,8 +1,9 @@
 class UpdateAddress < Rectify::Command
-  def initialize(address)
+  def initialize(address, current_user)
     @address = address.address
     @type = address.addressable_type
     @id = address.addressable_id
+    @current_user = current_user
   end
 
   def call
@@ -25,10 +26,10 @@ class UpdateAddress < Rectify::Command
   end
 
   def set_addressable_id
-    @address[:addressable_id] = current_user.id
+    @address[:addressable_id] = @current_user.id
   end
 
   def update_user
-    current_user.public_send(@type).update(@address)
+    @current_user.public_send(@type).update(@address)
   end
 end

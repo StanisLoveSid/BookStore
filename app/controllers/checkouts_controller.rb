@@ -13,13 +13,11 @@ class CheckoutsController < ApplicationController
 
   def update
     @order = current_order
-    @user = current_user
     case step
     when :address
-      @user.update(user_params)
+      AddCheckoutAddresses.call(@order, params)
     when :payment
-      @form = CreditCardForm.from_params(params)
-      AddCheckoutPayment.call(@form, params)
+      AddCheckoutPayment.call(@order, params, current_user)
     when :confirm
       @order.complete
     else
@@ -29,10 +27,6 @@ class CheckoutsController < ApplicationController
   end
 
   private
-
-  def user_params
-    params.require(:user).permit(:first_name, :last_name, :address, :city, :zipcode, :phone, :country)
-  end
 
   def order_params
     params.require(:order).permit(:delivery_id, :subtotal, :user_id)

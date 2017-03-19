@@ -87,23 +87,29 @@ Back to results
 <% @book.reviews.approved.each do |review| %>
 <li class="media card">
 <div class="media-left">
+
+<% if review.user.image.nil? %>
 <span class="img-circle logo-size logo-empty media-object">
-<% if review.user.first_name.nil?  %>
-U
-<% else %>
+<% if !review.user.first_name.nil? %>
 <%= review.user.first_name.first.capitalize %>
-<% end %>
+<% else %>
+U
+<% end -%>
 </span>
+<% else %>
+<%= image_tag review.user.image %>
+<% end %>
+
 </div>
+
 <div class="media-body">
 <div>
 <p class="general-message-date hidden-xs">
-<%= review.updated_at.year %>/
-<%= review.updated_at.month %>/
+<%= review.updated_at.year %>-
+<%= review.updated_at.month %>-
 <%= review.updated_at.day %>	
 </p>
 <h4 class="media-heading max-240 general-message-name">
-<span class="general-message-verified">Verified Reviewer </span>
 <% if review.user.first_name.nil?  %>
 U
 <% else %>

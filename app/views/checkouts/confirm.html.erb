@@ -29,12 +29,12 @@
 <div class="col-sm-3">
 <h3 class="general-subtitle">Shipping Address</h3>
 <%= link_to 'edit', wizard_path(:address), class: 'general-edit' %>
-<p class="general-address"><%= current_user.first_name + current_user.last_name %><br><%= current_user.address %><br><%= current_user.city %><br><%= current_user.country %><br><%= current_user.phone %></p>
+<p class="general-address"><%= current_order.order_shipping.first_name %><br><%= current_order.order_shipping.address %><br><%= current_order.order_shipping.city %><br><br><%= current_order.order_shipping.phone %></p>
 </div>
 <div class="col-sm-3">
 <h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.billing_address">Billing Address</span></h3>
 <a class="general-edit" href="#">edit</a>
-<p class="general-address">ffdsf ddfgdfg<br>Turbo street, 1<br>Dnipro<br>Ukraine<br>Phone +380 77 777 7707</p>
+<p class="general-address"><%= current_order.order_billing.first_name %><br><%= current_order.order_billing.address %><br><%= current_order.order_billing.city %><br><br><%= current_order.order_billing.phone %></p>
 </div>
 <div class="col-sm-3">
 <h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.shipments">Shipments</span></h3>

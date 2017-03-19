@@ -7,4 +7,6 @@ class AddressForm < Rectify::Form
   attribute :phone,            String
   attribute :addressable_type, String
   attribute :addressable_id,   Integer
+  attribute :addressable_type, String
+  attribute :addressable_id,   Integer
 end

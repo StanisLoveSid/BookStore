@@ -1,0 +1,25 @@
+   <div class="row">
+      <div class="col-md-5 mb-40">
+      <h3 class="general-subtitle">Billing Address</h3>
+
+ <%= render partial: 'address_form', locals: { type: :billing, user: resource }%>
+
+      </div>
+      <div class="col-md-5 col-md-offset-1 mb-60">
+               <h3 class="general-subtitle">Shipping Address</h3>
+
+ <%= render partial: 'address_form', locals: { type: :shipping, user: resource }%>
+      </div>
+    </div>
+
+
+
+
+    <%= link_to '...Read more', '', class: "read-more" %>
+    <script>
+      $('.read-more').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript render partial: 'user_form', locals: { resource: resource, resource_name: resource_name } %>')
+      })
+    </script>
+

@@ -1,0 +1,21 @@
+<h4>
+  <%= t('personal_info') %>
+</h4>
+<div class="well">
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, id: 'edit_email' }) do |f| %>
+    <%= f.error_notification %>
+    <%= f.input :email, as: :email %>
+    <%= f.input :first_name %>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>
+        <%= t('waiting_email', email: resource.unconfirmed_email) %>
+      </div>
+    <% end %>
+    <% if f.object.encrypted_password.present? %>
+      <%= f.input :current_password, as: :password, autocomplete: 'off', placeholder: t('pass_tip') %>
+    <% end %>
+    <div class="text-center">
+      <%= f.submit t('save_personal_info'), class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

@@ -186,13 +186,13 @@ ActiveRecord::Schema.define(version: 20170317205221) do
     t.string   "unconfirmed_email"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "address"
-    t.string   "city"
-    t.integer  "zipcode"
-    t.string   "phone"
     t.string   "country"
+    t.string   "phone"
+    t.integer  "zipcode"
+    t.string   "city"
+    t.string   "address"
+    t.string   "last_name"
+    t.string   "first_name"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end

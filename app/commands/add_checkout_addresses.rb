@@ -19,6 +19,7 @@ class AddCheckoutAddresses < Rectify::Command
   end
 
   def save_billing
+    @order.order_billing.delete if @order.order_billing
     Address.create @billing.address
   end
 
@@ -36,6 +37,7 @@ class AddCheckoutAddresses < Rectify::Command
   end
 
   def save_shipping
+    @order.order_shipping.delete if @order.order_shipping
     Address.create @shipping.address
   end
 

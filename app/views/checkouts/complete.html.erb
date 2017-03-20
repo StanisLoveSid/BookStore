@@ -27,19 +27,19 @@
 
 <div class="text-center mb-40">
 <h3 class="general-subtitle">Thank You for your Order!</h3>
-<p class="fw-300">An order confirmation has been has been sent to example@gmail.com</p>
+<p class="fw-300">An order confirmation has been has been sent to joingamings@gmail.com</p>
 </div>
 
 <div class="row mb-20">
 <div class="col-sm-6">
 <div class="visible-xs">
-<p class="general-order-number mb-0">#R14526131</p>
-<p class="general-address mb-30">March 17, 2017</p>
+<p class="general-order-number mb-0"><%= @user.orders.last.number %></p>
+<p class="general-address mb-30"><%= @user.orders.last.updated_at.time %></p>
 </div>
 <p class="general-address"><%= @user.orders.last.order_billing.first_name %><br><%= @user.orders.last.order_billing.address %><br><%= @user.orders.last.order_billing.city %><br><br><%= @user.orders.last.order_billing.phone %></p>
 </div>
 <div class="col-sm-6 hidden-xs text-right">
-<p class="general-order-number mb-0">#R14526131</p>
+<p class="general-order-number mb-0"><%= @user.orders.last.number %></p>
 <p class="general-address mb-30"><%= @user.orders.in_queue.last.updated_at.time %></p>
 </div>
 </div>

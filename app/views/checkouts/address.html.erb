@@ -51,7 +51,17 @@
         <div class="visible-xs visible-sm">
           <h3 class="general-subtitle">Shipping Address</h3>
         </div>
+          <div id="warranty">
         <%= render partial: 'address_fields', locals: { f: f, type: :shipping, order: @order, user: current_user } %>
+        </div>
+        
+        <script>
+  
+$('#enable').click(function(){
+    $('#warranty').css('display', ($(this).is(':checked') ? 'none' : 'block'));
+});
+
+</script>
       </div>
     </div>
     <div class="general-text-align mb-60">
@@ -82,16 +92,4 @@
     </div>
   <% end %>
 </main>
-<script>
-  
-  $(function(){
-    $('.checkbox-input').click(function() {
-      if ($("#shipping-address .form-control").prop('disabled')) {
-        $("#shipping-address .form-control").removeAttr('disabled', true);
-      } else {
-          $("#shipping-address .form-control").prop('disabled', true);
-      }
-    });
-  });
 
-</script>

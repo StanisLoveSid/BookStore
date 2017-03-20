@@ -13,10 +13,17 @@
       </div>
     <% end %>
   <% end %>
-  <% if type == :shipping %>
+  <% if type == :billing %>
     <%= f.fields_for :use_billing do |sb| %>
-      <%= sb.check_box :allow, checked: true %>
-      <%= t('use_billing') %>
+    <label class="font-weight-light pl-0">
+      <%= sb.check_box :allow,{ id: 'enable', class: 'checkbox-input', hidden: true} %>
+        <span class="checkbox-icon">
+    <i class="fa fa-check"></i>
+  </span>
+  <%= t('use_billing') %>
+        </label>
     <% end %>
+
   <% end %>
+
 

@@ -1,13 +1,13 @@
 <div class="row mb-20">
 <div class="col-sm-6">
 <div class="visible-xs">
-<p class="general-order-number mb-0">#R14526131</p>
+<p class="general-order-number mb-0"><%= @order.number %></p>
 <p class="general-address mb-30">March 17, 2017</p>
 </div>
-<p class="general-address"><%= current_user.first_name + current_user.last_name %><br><%= current_user.address %><br><%= current_user.city %><br><%= current_user.country %><br><%= current_user.phone %></p>
+<p class="general-address"><%= @user.orders.last.order_billing.first_name %><br><%= @user.orders.last.order_billing.address %><br><%= @user.orders.last.order_billing.city %><br><br><%= @user.orders.last.order_billing.phone %></p>
 </div>
 <div class="col-sm-6 hidden-xs text-right">
-<p class="general-order-number mb-0">#R14526131</p>
+<p class="general-order-number mb-0"><%= @order.number %></p>
 <p class="general-address mb-30"><%= @order.updated_at.time %></p>
 </div>
 </div>

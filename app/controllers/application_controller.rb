@@ -5,17 +5,21 @@ class ApplicationController < ActionController::Base
 
   def current_order
     if !session[:order_id].nil?
-      !find_order.in_progress? ? Order.new : find_order
+      !find_order.in_progress? ? Order.new(number: number_generator) : find_order
     else
-      Order.new
+      Order.new(number: number_generator)
     end
+  end
+
+  def number_generator
+    "#N"+Time.now.to_f.to_s[0, 10]
   end
 
   def find_order
     Order.find(session[:order_id])
   end
 
-  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
 

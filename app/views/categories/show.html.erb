@@ -16,7 +16,7 @@
 </div>
 <ul class="list-inline pt-10 mb-25 mr-240">
 <li class="mr-35">
-<%= link_to("All<span class='badge general-badge'>#{Book.all.size}</span>".html_safe , {controller: "categories", action: "show", filter: "All" }, class: 'filter-link ') %>
+<%= link_to("All<span class='badge general-badge'>#{Book.all.size}</span>".html_safe ,categories_path , class: 'filter-link ') %>
 </li>
 <% @categories.each do |category| %>
 <li class="mr-35">
@@ -36,7 +36,7 @@
 </a>
 <ul class="dropdown-menu">
 <li class="mr-35">
-<%= link_to("All<span class='badge general-badge'>#{Book.all.size}</span>".html_safe , {controller: "categories", action: "show", filter: "All" }, class: 'filter-link ') %>
+<%= link_to("All<span class='badge general-badge'>#{Book.all.size}</span>".html_safe ,categories_path , class: 'filter-link ') %>
 </li>
 <% @categories.each do |category| %>
 <li class="mr-35">
@@ -84,7 +84,7 @@
 </div>
 <div class="general-thumb-info">
 <p class="title"><%= book.title %></p>
-<p class="font-16 in-gold-500"><%= book.price %></p>
+<p class="font-16 in-gold-500"><%= number_to_currency book.price %></p>
 <span class="divider-sm"></span>
 <p class="in-grey-600 small">
 <% book.authors.each do |author| %>

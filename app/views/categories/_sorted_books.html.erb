@@ -10,13 +10,15 @@
 <div class="thumb-hover">
 <div class="general-thumb-link-wrap">
 <%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %>
+<%= link_to({controller: 'order_items', action: "create", order_item: {quantity: 1, book_id: book.id}}, class: 'thumb-hover-link', method: :post, remote: true) do %>
+<i class="fa fa-shopping-cart thumb-icon"></i> <% end %>
 </div>
 </div>
 </div>
 </div>
 <div class="general-thumb-info">
 <p class="title"><%= book.title %></p>
-<p class="font-16 in-gold-500"><%= book.price %></p>
+<p class="font-16 in-gold-500"><%= number_to_currency book.price %></p>
 <span class="divider-sm"></span>
 <p class="in-grey-600 small">
 <% book.authors.each do |author| %>

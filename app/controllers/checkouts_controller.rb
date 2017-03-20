@@ -21,7 +21,11 @@ class CheckoutsController < ApplicationController
       end
     when :delivery
       @order.update(order_params)
-      render_wizard @order
+      if @order.delivery.name == 'none'
+        redirect_to :back
+      else
+        render_wizard @order
+      end
     when :payment
       AddCheckoutPayment.call(@order, params) do
         on(:ok)         { render_wizard @order }
@@ -30,7 +34,7 @@ class CheckoutsController < ApplicationController
     when :confirm
       OrderMailer.send_order(@order, current_user).deliver
       @order.complete
-      render_wizard @order    
+      render_wizard @order
     end
   end
 

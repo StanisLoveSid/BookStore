@@ -15,16 +15,23 @@ class CheckoutsController < ApplicationController
     @order = current_order
     case step
     when :address
-      AddCheckoutAddresses.call(@order, params)
+      AddCheckoutAddresses.call(@order, params) do
+        on(:ok)         { render_wizard @order }
+        on(:invalid)    { redirect_to :back }
+      end
+    when :delivery
+      @order.update(order_params)
+      render_wizard @order
     when :payment
-      AddCheckoutPayment.call(@order, params)
+      AddCheckoutPayment.call(@order, params) do
+        on(:ok)         { render_wizard @order }
+        on(:invalid)    { redirect_to :back }
+      end
     when :confirm
       OrderMailer.send_order(@order, current_user).deliver
       @order.complete
-    else
-      @order.update(order_params)
+      render_wizard @order    
     end
-    render_wizard @order
   end
 
   private

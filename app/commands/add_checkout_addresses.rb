@@ -10,6 +10,8 @@ class AddCheckoutAddresses < Rectify::Command
 
     set_shipping
     @shipping.valid? ? save_shipping : write_errors(:shipping, @shipping)
+    return broadcast(:invalid), @order.errors if write_errors(:billing, @billing).any? || write_errors(:shipping, @shipping).any?
+    broadcast(:ok)
   end
 
   private

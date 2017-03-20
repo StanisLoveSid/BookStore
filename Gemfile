@@ -33,6 +33,7 @@ gem 'bootstrap-sass'
 gem 'owlcarousel-rails'
 gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
 gem 'domp'
+gem 'credit_card_validations'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

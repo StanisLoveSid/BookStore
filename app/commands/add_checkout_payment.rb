@@ -7,6 +7,8 @@ class AddCheckoutPayment < Rectify::Command
   def call
     build_credit_card
     @credit_card.valid? ? save_card : write_errors
+    return broadcast(:invalid) if write_errors.any?
+    broadcast(:ok)
   end
 
   private

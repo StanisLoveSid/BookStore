@@ -9,4 +9,15 @@ class AddressForm < Rectify::Form
   attribute :addressable_id,   Integer
   attribute :addressable_type, String
   attribute :addressable_id,   Integer
+
+  validates :first_name,
+    :last_name,
+    :address,
+    :city,
+    :zipcode,
+    :phone,
+    :addressable_type,
+    presence: true
+
+  validates :phone, format: { with: /\A\+\d{12}\z/ }
 end

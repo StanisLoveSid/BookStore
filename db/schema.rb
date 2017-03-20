@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 20170319190219) do
     t.integer  "user_id"
     t.string   "aasm_state"
     t.string   "delivery_method"
-    t.integer  "delivery_id",     default: 11
+    t.integer  "delivery_id",     default: 21
     t.string   "number"
     t.index ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
     t.index ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree

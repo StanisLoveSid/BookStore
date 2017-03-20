@@ -26,6 +26,21 @@
       <span class="step-text hidden-xs">Complete</span>
     </li>
   </ul>
+    <% if @order.errors.any? %>
+  <div class="error-messages">
+    <p>
+      <%= pluralize(@order.errors.count, t('error')) %>
+      <%= t('prohibited_from_save') %>
+    </p>
+    <ul>
+      <% @order.errors.full_messages.each do |msg| %>
+        <li>
+          <%= msg %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
   <%= form_for @order, url: wizard_path, method: :put, html: { class: "res-mb-100" } do |f| %>
     <div class="hidden-xs hidden-sm">
       <div class="row">

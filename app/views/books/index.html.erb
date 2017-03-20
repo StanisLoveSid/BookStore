@@ -5,8 +5,12 @@
 <div class="row">
 <div class="col-sm-5">
 <div class="general-img-wrap">
-  <% book.book_attachments.each do |photo| %>
-  <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img width-full" %>
+<% if book.book_attachments.any? %>
+  <% book.book_attachments.first do |photo| %>
+    <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img width-full" %>
+      <% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img width-full" %>
 <% end %>
 </div>
 </div>
@@ -59,8 +63,12 @@
 <div class="col-sm-6 col-md-3">
 <div class="general-thumb-wrap">
 <div class="thumbnail general-thumbnail">
-  <% book.book_attachments.each do |photo| %>
+<% if book.book_attachments.any? %>
+  <% book.book_attachments.first do |photo| %>
   <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img" %>
 <% end %>
 <div class="thumb-hover">
 <div class="general-thumb-link-wrap">

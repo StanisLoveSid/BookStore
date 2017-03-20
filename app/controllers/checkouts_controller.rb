@@ -17,7 +17,7 @@ class CheckoutsController < ApplicationController
     when :address
       AddCheckoutAddresses.call(@order, params)
     when :payment
-      AddCheckoutPayment.call(@order, params, current_user)
+      AddCheckoutPayment.call(@order, params)
     when :confirm
       OrderMailer.send_order(@order, current_user).deliver
       @order.complete

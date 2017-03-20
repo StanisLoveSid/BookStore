@@ -7,8 +7,12 @@
     <%= book.description %>
     <div class="col-xs-4">
        
-      <% book.book_attachments.each do |photo| %>
+<% if book.book_attachments.any? %>
+  <% book.book_attachments.each do |photo| %>
   <%= image_tag photo.photo_url %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png' %>
 <% end %>
 
       <%= form_for order_item, remote: true do |f| %>

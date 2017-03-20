@@ -6,8 +6,13 @@ Back to results
 <div class="col-sm-6">
 <div class="product-gallery">
 <div class="mb-20">
+
+<% if @book.book_attachments.any? %>
   <% @book.book_attachments.each do |photo| %>
   <%= image_tag photo.photo_url, class: "img-responsive img-shadow" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-responsive img-shadow" %>
 <% end %>
 </div>
 </div>

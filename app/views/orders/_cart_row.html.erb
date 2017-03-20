@@ -1,8 +1,12 @@
 <tr>
 <td>
 <div class="general-img-wrap-table">
+<% if book.book_attachments.any? %>
   <% book.book_attachments.each do |photo| %>
   <%= image_tag photo.photo_url, class: "cart-img-shadow pull-left width-full" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "cart-img-shadow pull-left width-full" %>
 <% end %>
 </div>
 </td>

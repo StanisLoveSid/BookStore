@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+
   def self.create_from_omniauth(params)
     attributes = {
       email: params['info']['email'],
@@ -31,5 +32,9 @@ class User < ApplicationRecord
   has_one :billing, -> { where addressable_type: 'billing' },
     class_name: Address, foreign_key: :addressable_id,
     dependent: :destroy
+
+  validates :email,
+    presence: true,
+    uniqueness: { case_sensitive: false }
 
 end

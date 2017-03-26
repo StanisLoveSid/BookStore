@@ -26,36 +26,50 @@
 <span class="step-text hidden-xs">Complete</span>
 </li>
 </ul>
+
+ 
   <%= form_for @order, url: wizard_path, method: :put, class: 'max-600 mb-80' do |f| %>
     <%= f.simple_fields_for :credit_card_attributes do |sf| %>
 
 <h3 class="general-subtitle">Credit Card</h3>
-<div class="form-group">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "Number") %> form-group">
       <%= sf.label "Card number", class: "control-label input-label"  %>
-      <%= sf.text_field :number, class: "form-control", placeholder: "Card Number" %>
+      <%= sf.text_field :number, value: @order.try(:credit_card).try(:number), class: "form-control", placeholder: "Card Number" %>
       <%= sf.hidden_field :user_id, value: current_user.id %>
       <%= sf.hidden_field :order_id, value: current_order.id %>
+           <% @order.errors.messages[:base].each do |msg| %>
+  <p> <%= msg if msg.include? "Number" %> </p>
+     <% end %>
       </div>
 
       <div class="row">
        <div class="col-sm-6">
-        <div class="form-group">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "First") %> form-group">
          <%= sf.label "Name on card", class: "control-label input-label"  %>
-         <%= sf.text_field :first_name, class: "form-control", placeholder: "Name on card" %>
+         <%= sf.text_field :first_name, value: @order.try(:credit_card).try(:first_name), class: "form-control", placeholder: "Name on card" %>
+      <% @order.errors.messages[:base].each do |msg| %>
+        <p> <%= msg if msg.include? "First" %> </p>
+     <% end %>
         </div>
        </div>
         <div class="col-sm-3">
-        <div class="form-group">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "First") %> form-group">
          <%= sf.label "MM/YY", class: "control-label input-label"  %>
-         <%= sf.text_field :expiration_date, class: "form-control", placeholder: "MM/YY" %>
+         <%= sf.text_field :expiration_date, value: @order.try(:credit_card).try(:expiration_date), class: "form-control", placeholder: "MM/YY" %>
         </div>
+             <% @order.errors.messages[:base].each do |msg| %>
+         <p> <%= msg if msg.include? "Expiration" %> </p>
+          <% end %>
        </div>
         
         <div class="col-sm-3">
-        <div class="form-group">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "First") %> form-group">
          <%= sf.label "CVV", class: "control-label input-label"  %>
-         <%= sf.text_field :cvv, class: "form-control", placeholder: "CVV" %>
+         <%= sf.text_field :cvv, value: @order.try(:credit_card).try(:cvv),class: "form-control", placeholder: "CVV" %>
         </div>
+             <% @order.errors.messages[:base].each do |msg| %>
+  <p> <%= msg if msg.include? "Cvv" %> </p>
+     <% end %>
         </div>
       </div>
     <% end %>

@@ -7,14 +7,15 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_user.orders.find(params[:id])
-    @order.new(order_params)
-    @order.save
-    redirect_to "/cart"
+    CreateOrder.call(params) do
+      on(:ok)       { redirect_to cart_path }
+      on(:invalid)  {  }
+    end
   end
 
   def edit
-    @order_items = current_order.order_items
+    @items = current_order.order_items
+    @order_items = @items.sort_by(&:quantity).reverse
     @order = current_order
   end
 
@@ -39,12 +40,14 @@ class OrdersController < ApplicationController
       @status = "Delivered"
     else 
       @orders = @user_orders
+      @status = "Select sorting"
     end
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:subtotal, :coupon)
+    params.require(:order).permit(:subtotal, :coupon, 
+      order_items_attributes: [:id, :quantity, :book_id])
   end
 end

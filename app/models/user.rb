@@ -33,6 +33,9 @@ class User < ApplicationRecord
     class_name: Address, foreign_key: :addressable_id,
     dependent: :destroy
 
+  accepts_nested_attributes_for :shipping
+  accepts_nested_attributes_for :billing
+
   validates :email,
     presence: true,
     uniqueness: { case_sensitive: false }

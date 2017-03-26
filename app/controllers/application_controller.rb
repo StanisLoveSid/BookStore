@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def current_order
     if !session[:order_id].nil?
-      !find_order.in_progress? ? Order.new(number: number_generator) : find_order
+      !find_order.in_progress? && !find_order.filled? ? Order.new(number: number_generator) : find_order
     else
       Order.new(number: number_generator)
     end

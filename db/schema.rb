@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170319190219) do
+ActiveRecord::Schema.define(version: 20170326225809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address"
+    t.string   "addressing"
     t.string   "zipcode"
     t.string   "city"
     t.string   "phone"
@@ -26,6 +27,8 @@ ActiveRecord::Schema.define(version: 20170319190219) do
     t.datetime "updated_at",       null: false
     t.string   "addressable_type"
     t.integer  "addressable_id"
+    t.string   "type"
+    t.string   "country"
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", using: :btree
   end
 
@@ -140,6 +143,8 @@ ActiveRecord::Schema.define(version: 20170319190219) do
     t.string   "delivery_method"
     t.integer  "delivery_id",     default: 21
     t.string   "number"
+    t.integer  "credit_card_id"
+    t.index ["credit_card_id"], name: "index_orders_on_credit_card_id", using: :btree
     t.index ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
     t.index ["order_status_id"], name: "index_orders_on_order_status_id", using: :btree
   end
@@ -202,6 +207,7 @@ ActiveRecord::Schema.define(version: 20170319190219) do
   add_foreign_key "credit_cards", "users"
   add_foreign_key "order_items", "books"
   add_foreign_key "order_items", "orders"
+  add_foreign_key "orders", "credit_cards"
   add_foreign_key "orders", "deliveries"
   add_foreign_key "orders", "order_statuses"
   add_foreign_key "reviews", "users"

@@ -30,8 +30,11 @@
 </th>
 <th class="col-close"></th>
 </tr>
+<%= form_for @order do |f| %>
   <% @order_items.each do |order_item| %>
-    <%= render 'orders/cart_row', book: order_item.book, order_item: order_item, show_total: true %>
+  <%= f.simple_fields_for :order_items, order_item do |oi| %>
+    <%= render 'orders/cart_row',oi: oi, book: order_item.book, order_item: order_item, show_total: true %>
+    <% end %>
   <% end %>
 </tbody></table>  
 
@@ -42,7 +45,7 @@
 <label class="control-label" for="coupon_code">Enter Your Coupon Code</label>
 </div>
 <div>
-<%= form_for @order do |f|%>
+
 <%= f.text_field :coupon, class: "form-control" %>
 <%= f.submit class: 'btn btn-primary mt-30 mb-15 res-block' %>
 <% end %>
@@ -65,7 +68,7 @@
 <p class="font-16">Coupon:</p>
 </td>
 <td>
-<p class="font-16"><%= current_order.coupon %></p>
+<p class="font-16">-<%= number_to_currency current_order.coupon_price %></p>
 </td>
 </tr>
 <tr>

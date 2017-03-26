@@ -10,6 +10,8 @@ class Order < ApplicationRecord
   belongs_to :user
   belongs_to :order_status
 
+  accepts_nested_attributes_for :order_items
+
   STATES = [:in_delivery, :delivered, :canceled]
 
   has_one :order_shipping,
@@ -23,21 +25,35 @@ class Order < ApplicationRecord
 
   aasm do
     state :in_progress, :initial => true
+    state :filled
     state :in_queue
     state :in_delivery
     state :delivered
     state :canceled
 
+    event :fill do
+      transitions  from: :in_progress, to: :filled
+    end
+
     event :complete do
-      transitions :from => :in_progress, :to => :in_queue
+      transitions :from => :filled, :to => :in_queue
     end
   end
 
+  def price_calc
+    @price = order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum
+    @if_discount = coupon == '1111' ? @price/4 : @price
+  end
+
+  def coupon_price
+    price_calc
+    @price - @if_discount
+  end
+
   def subtotal
-    price = order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum
-    if_discount = coupon == '1111' ? price/4 : price
+    price_calc
     delivery.price = 0 if order_items.size == 0 && !delivery.nil?
-    if_discount += delivery.price if !delivery.nil?
+    @if_discount += delivery.price if !delivery.nil?
   end
 
 

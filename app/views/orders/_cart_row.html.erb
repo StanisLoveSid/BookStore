@@ -18,17 +18,14 @@
 </td>
 <td>
 <div class="input-group general-position">
-<%= form_for order_item, remote: true do |f| %>
-<a class="input-link" onclick="decrementValue()">
-<i class="fa fa-minus line-height-40"></i>
-</a>
-<%= f.text_field :quantity, class: "form-control quantity-input", id: "quantity" %>
-<a class="input-link" onclick="incrementValue()">
-<i class="fa fa-plus line-height-40"></i>
-</a>
-<%= f.hidden_field :book_id, value: book.id %>
-<%= f.submit "Update Quantity", class: "btn btn-primary" %>
-<% end %>
+
+<%= link_to( order_item_path(order_item, order_item: {quantity: order_item.quantity - 1, book_id: book.id}), class: 'input-link', method: :patch, remote: true) do %>
+<i class="fa fa-minus line-height-40"></i> <% end %>
+<%= oi.text_field :quantity, class: "form-control quantity-input", id: "quantity" %>
+<%= link_to( order_item_path(order_item, order_item: {quantity: order_item.quantity + 1, book_id: book.id}), class: 'input-link', method: :patch, remote: true) do %>
+<i class="fa fa-plus line-height-40"></i> <% end %>
+<%= oi.hidden_field :book_id, value: book.id %>
+
 </div>
 </td>
 <td>

@@ -1,11 +1,15 @@
-<% @sorted_books.each_slice(4) do |slice| %>
+<% @sorted_books.each_slice(12) do |slice| %>
 <div class="row">
 <% slice.each do |book| %>
 <div class="col-sm-6 col-md-3">
 <div class="general-thumb-wrap">
 <div class="thumbnail general-thumbnail">
+<% if book.book_attachments.any? %>
   <% book.book_attachments.each do |photo| %>
   <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img" %>
 <% end %>
 <div class="thumb-hover">
 <div class="general-thumb-link-wrap">

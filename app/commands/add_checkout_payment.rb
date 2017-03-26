@@ -6,8 +6,10 @@ class AddCheckoutPayment < Rectify::Command
 
   def call
     build_credit_card
-    @credit_card.valid? ? save_card : write_errors
+    save_card if @credit_card.valid?
     return broadcast(:invalid) if write_errors.any?
+    return broadcast(:empty_address) if @order.order_billing.nil?
+    return broadcast(:empty_delivery) if @order.delivery.name == 'none'
     broadcast(:ok)
   end
 
@@ -19,6 +21,7 @@ class AddCheckoutPayment < Rectify::Command
 
   def save_card
     new_card = CreditCard.create @credit_card.to_h
+    new_card.orders << @order
   end
 
   def write_errors

@@ -5,12 +5,14 @@ class AddCheckoutAddresses < Rectify::Command
   end
 
   def call
-    set_billing
-    @billing.valid? ? save_billing : write_errors(:billing, @billing)
+    transaction do
+      set_billing
+      @billing.valid? ? save_billing : write_errors(:billing, @billing)
 
-    set_shipping
-    @shipping.valid? ? save_shipping : write_errors(:shipping, @shipping)
-    return broadcast(:invalid), @order.errors if write_errors(:billing, @billing).any? || write_errors(:shipping, @shipping).any?
+      set_shipping
+      @shipping.valid? ? save_shipping : write_errors(:shipping, @shipping)
+    end
+    return broadcast(:invalid) if @order.errors.any?
     broadcast(:ok)
   end
 

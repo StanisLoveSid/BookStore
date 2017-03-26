@@ -28,22 +28,22 @@
 <div class="row mb-20">
 <div class="col-sm-3">
 <h3 class="general-subtitle">Shipping Address</h3>
-<%= link_to 'edit', wizard_path(:address), class: 'general-edit' %>
-<p class="general-address"><%= current_order.order_shipping.first_name %><br><%= current_order.order_shipping.address %><br><%= current_order.order_shipping.city %><br><br><%= current_order.order_shipping.phone %></p>
+<%= link_to 'edit', wizard_path(:address, filter: "edit"), class: 'general-edit' %>
+<p class="general-address"><%= current_order.order_shipping.first_name + " " + current_order.order_shipping.last_name %><br><%= current_order.order_shipping.addressing %><br><%= current_order.order_shipping.city %><br><%= current_order.order_shipping.country %><br><%= current_order.order_shipping.phone %></p>
 </div>
 <div class="col-sm-3">
 <h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.billing_address">Billing Address</span></h3>
-<a class="general-edit" href="#">edit</a>
-<p class="general-address"><%= current_order.order_billing.first_name %><br><%= current_order.order_billing.address %><br><%= current_order.order_billing.city %><br><br><%= current_order.order_billing.phone %></p>
+<%= link_to 'edit', wizard_path(:address, filter: "edit"), class: 'general-edit' %>
+<p class="general-address"><%= current_order.order_billing.first_name + " " + current_order.order_billing.last_name %><br><%= current_order.order_billing.addressing %><br><%= current_order.order_billing.city %><br><%= current_order.order_billing.country %><br><%= current_order.order_billing.phone %></p>
 </div>
 <div class="col-sm-3">
 <h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.shipments">Shipments</span></h3>
-<%= link_to 'edit', wizard_path(:delivery), class: 'general-edit' %>
+<%= link_to 'edit', wizard_path(:delivery, filter: "edit"), class: 'general-edit' %>
 <p class="general-address"><%= number_to_currency current_order.delivery.price %><br><%= current_order.delivery.name %></p>
 </div>
 <div class="col-sm-3">
 <h3 class="general-subtitle"><span class="translation_missing" title="translation missing: en.payment_information">Payment Information</span></h3>
-<%= link_to 'edit', wizard_path(:payment), class: 'general-edit' %>
+<%= link_to 'edit', wizard_path(:payment, filter: "edit"), class: 'general-edit' %>
 <p class="general-address"><%= current_user.credit_cards.last.number %><br><%= current_user.credit_cards.last.expiration_date %></p>
 </div>
 </div>

@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
   end
 
   def optimise(array)
-    Kaminari.paginate_array(array).page(params[:page]).per(4)
+    Kaminari.paginate_array(array).page(params[:page]).per(12)
   end
 
   def index

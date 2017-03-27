@@ -5,7 +5,6 @@ class OrderItem < ApplicationRecord
   validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validate :book_present
  
-
   before_save :finalize
 
   def unit_price
@@ -27,8 +26,6 @@ class OrderItem < ApplicationRecord
       errors.add(:book, "is not valid or is not active.")
     end
   end
-
- 
 
   def finalize
     self[:unit_price] = unit_price

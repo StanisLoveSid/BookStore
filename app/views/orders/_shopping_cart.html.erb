@@ -13,6 +13,7 @@
   </p>
 <% else %>
 <h1 class="general-title-margin">Cart</h1>
+<%= form_for @order do |f| %>
 <table class="table table-hover">
 <tbody><tr class="no-hover">
 <th class="col-pic pl-0">
@@ -30,7 +31,7 @@
 </th>
 <th class="col-close"></th>
 </tr>
-<%= form_for @order do |f| %>
+
   <% @order_items.each do |order_item| %>
   <%= f.simple_fields_for :order_items, order_item do |oi| %>
     <%= render 'orders/cart_row',oi: oi, book: order_item.book, order_item: order_item, show_total: true %>

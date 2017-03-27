@@ -14,6 +14,7 @@ class User < ApplicationRecord
     self.authentications.last.params[:info][:image] if !self.authentications.last.nil?
   end
 
+
   has_many :authentications, class_name: 'UserAuthentication', dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

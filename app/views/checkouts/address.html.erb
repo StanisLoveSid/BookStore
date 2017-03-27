@@ -52,9 +52,21 @@
         <div class="visible-xs visible-sm">
           <h3 class="general-subtitle">Shipping Address</h3>
         </div>
-          <div id="warranty">
+          <div id="warranty" style="display: none;">
         <%= render partial: 'address_fields', locals: { f: f, type: :shipping, order: @order, user: current_user } %>
         </div>
+          <% if :billing %>
+    <%= f.fields_for :use_billing do |sb| %>
+    <label class="font-weight-light pl-0">
+      <%= sb.check_box :allow,{ id: 'enable', class: 'checkbox-input', hidden: true, checked: true} %>
+        <span class="checkbox-icon">
+    <i class="fa fa-check"></i>
+  </span>
+  <%= t('use_billing') %>
+        </label>
+    <% end %>
+
+  <% end %>
         
         <script>
   

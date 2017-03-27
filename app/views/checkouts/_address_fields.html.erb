@@ -5,7 +5,7 @@
 
 
       <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "First") %> form-group">
-        <%= a.input :first_name, input_html: { value: fill_address(user, order, type, :first_name), class: 'form-control' } %>
+        <%= a.input :first_name, input_html: { value: ( !user.authentications.any? ? fill_address(user, order, type, :first_name) : user.authentications.last.params[:info][:first_name]), class: 'form-control' } %>
           <span class="help-block">
      <% order.errors.messages[:"#{type}"].each do |msg| %>
   <p> <%= msg if msg.include? "First" %> </p>
@@ -14,7 +14,7 @@
 </div>
 
       <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "Last") %> form-group">
-        <%= a.input :last_name, input_html: { value: fill_address(user, order, type, :last_name), class: 'form-control' } %>
+        <%= a.input :last_name, input_html: { value: ( !user.authentications.any? ? fill_address(user, order, type, :last_name) : user.authentications.last.params[:info][:last_name]), class: 'form-control' } %>
           <span class="help-block">
      <% order.errors.messages[:"#{type}"].each do |msg| %>
   <p> <%= msg if msg.include? "Last" %> </p>
@@ -69,17 +69,6 @@
       </div>
     <% end %>
   <% end %>
-  <% if type == :billing %>
-    <%= f.fields_for :use_billing do |sb| %>
-    <label class="font-weight-light pl-0">
-      <%= sb.check_box :allow,{ id: 'enable', class: 'checkbox-input', hidden: true, checked: true} %>
-        <span class="checkbox-icon">
-    <i class="fa fa-check"></i>
-  </span>
-  <%= t('use_billing') %>
-        </label>
-    <% end %>
 
-  <% end %>
 
 

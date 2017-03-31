@@ -100,6 +100,7 @@ GEM
     execjs (2.7.0)
     faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
+    ffaker (2.5.0)
     ffi (1.9.17)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
@@ -298,6 +299,7 @@ DEPENDENCIES
   credit_card_validations
   devise
   domp
+  ffaker
   haml
   jbuilder (~> 2.5)
   jquery-rails

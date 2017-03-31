@@ -3,27 +3,12 @@ class ReviewsController < ApplicationController
   before_action :set_review, only: [:destroy, :edit, :update]
   before_action :authenticate_user!, except: [:index]
 
-  def edit
-  	@book = Book.find(params[:book_id])
-    @review = @book.reviews.find(params[:id])
-  end
-
-  def update
-    @review.update(review_params)
-    redirect_to root_path
-  end
-
   def create
     @book = Book.find(params[:book_id])
     @review = @book.reviews.new(review_params)
     @review.user_id = current_user.id
     @review.save
     redirect_to @book
-  end
-
-  def destroy
-    @review.destroy
-    redirect_to root_path
   end
 
   def index

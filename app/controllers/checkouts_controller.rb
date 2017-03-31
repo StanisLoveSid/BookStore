@@ -13,34 +13,21 @@ class CheckoutsController < ApplicationController
     render_wizard
   end
 
+  def filled_order
+    @order.filled? ? redirect_to(checkout_path(:confirm)) : render_wizard(@order)
+  end
+
   def update
     @order = current_order
     case step
     when :address
       AddCheckoutAddresses.call(@order, params) do
-        on(:ok) do
-
-          if @order.filled?
-            redirect_to(checkout_path(:confirm))
-          else
-            render_wizard @order
-          end
-        end
-        on(:invalid) do
-          render_wizard
-        end
+        on(:ok) { @order.filled? ? redirect_to(checkout_path(:confirm)) : render_wizard(@order) }
+        on(:invalid) { render_wizard }
       end
     when :delivery
       @order.update(order_params)
-      if @order.delivery.name == 'none'
-        render_wizard
-      else
-        if @order.filled?
-          redirect_to(checkout_path(:confirm))
-        else
-          render_wizard @order
-        end
-      end
+      @order.delivery.name == 'none' ? render_wizard : filled_order
     when :payment
       AddCheckoutPayment.call(@order, params) do
         on(:ok)  do

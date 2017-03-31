@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
   include CanCan::ControllerAdditions
   helper_method :current_order
 
+  rescue_from CanCan::AccessDenied do |_|
+    flash[:error] = t('access_denied')
+    redirect_to root_path
+  end
+
   def current_order
     if !session[:order_id].nil?
       !find_order.in_progress? && !find_order.filled? ? Order.new(number: number_generator, delivery: find_delivery) : find_order

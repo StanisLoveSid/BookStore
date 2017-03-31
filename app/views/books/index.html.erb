@@ -6,9 +6,9 @@
 <div class="col-sm-5">
 <div class="general-img-wrap">
 <% if book.book_attachments.any? %>
-  <% book.book_attachments.first do |photo| %>
-    <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img width-full" %>
-      <% end %>
+
+    <%= image_tag book.book_attachments.first.photo, class: "img-shadow general-thumbnail-img width-full" %>
+
   <% else %> 
 <%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img width-full" %>
 <% end %>
@@ -31,9 +31,13 @@
     <%= book.description %>
   <% end %>
 </p>
+
+<p class="in-grey-600 small">
 <% book.authors.each do |author| %>
-<p class="in-grey-600 small"><%= author.name %></p>
+<%= author == book.authors.last ? author.name : author.name + "," %>
 <% end %>
+</p>
+
 <div class="general-align pt-20">
 <%= form_for @order_item, remote: true do |f| %>
 <%= f.hidden_field :quantity, value: 1 %>
@@ -64,9 +68,9 @@
 <div class="general-thumb-wrap">
 <div class="thumbnail general-thumbnail">
 <% if book.book_attachments.any? %>
-  <% book.book_attachments.first do |photo| %>
-  <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img" %>
-<% end %>
+ 
+  <%= image_tag book.book_attachments.first.photo, class: "img-shadow general-thumbnail-img" %>
+
   <% else %> 
 <%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img" %>
 <% end %>

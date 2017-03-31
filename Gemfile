@@ -34,6 +34,7 @@ gem 'bootstrap-sass'
 gem 'owlcarousel-rails'
 gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
 gem 'domp'
+gem 'ffaker'
 gem 'jquery-turbolinks'
 gem 'credit_card_validations'
 # Use jquery as the JavaScript library

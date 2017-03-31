@@ -27,15 +27,6 @@ class OrderItemsController < ApplicationController
     @order_items = @order.order_items
   end
 
-  def discount
-    @order = current_order
-    @order_item = @order.order_items.find(params[:id])
-    @order_item.unit_price -= 1 
-    @order_item.save
-    redirect_to root_path
-  end
-
-
   private
 
   def set_book

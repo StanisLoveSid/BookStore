@@ -1,0 +1,119 @@
+  <ul class="steps list-inline">
+<li class="step done">
+<span class="step-number">1
+</span>
+<span class="step-text hidden-xs">Address</span>
+</li>
+<li class="step-divider"></li>
+<li class="step done">
+<span class="step-number">2
+</span>
+<span class="step-text hidden-xs">Delivery</span>
+</li>
+<li class="step-divider"></li>
+<li class="step active">
+<span class="step-number">3</span>
+<span class="step-text hidden-xs">Payment</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">4</span>
+<span class="step-text hidden-xs">Confirm</span>
+</li>
+<li class="step-divider"></li>
+<li class="step">
+<span class="step-number">5</span>
+<span class="step-text hidden-xs">Complete</span>
+</li>
+</ul>
+
+ 
+  <%= form_for @order, url: wizard_path, method: :put, class: 'max-600 mb-80' do |f| %>
+    <%= f.simple_fields_for :credit_card_attributes do |sf| %>
+
+<h3 class="general-subtitle">Credit Card</h3>
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "Number") %> form-group">
+      <%= sf.label "Card number", class: "control-label input-label"  %>
+      <%= sf.text_field :number, value: @order.try(:credit_card).try(:number), class: "form-control", placeholder: "Card Number" %>
+      <%= sf.hidden_field :user_id, value: current_user.id %>
+      <%= sf.hidden_field :order_id, value: current_order.id %>
+           <% @order.errors.messages[:base].each do |msg| %>
+  <p> <%= msg if msg.include? "Number" %> </p>
+     <% end %>
+      </div>
+
+      <div class="row">
+       <div class="col-sm-6">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "First") %> form-group">
+         <%= sf.label "Name on card", class: "control-label input-label"  %>
+         <%= sf.text_field :first_name, value: @order.try(:credit_card).try(:first_name), class: "form-control", placeholder: "Name on card" %>
+      <% @order.errors.messages[:base].each do |msg| %>
+        <p> <%= msg if msg.include? "First" %> </p>
+     <% end %>
+        </div>
+       </div>
+        <div class="col-sm-3">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "First") %> form-group">
+         <%= sf.label "MM/YY", class: "control-label input-label"  %>
+         <%= sf.text_field :expiration_date, value: @order.try(:credit_card).try(:expiration_date), class: "form-control", placeholder: "MM/YY" %>
+        </div>
+             <% @order.errors.messages[:base].each do |msg| %>
+         <p> <%= msg if msg.include? "Expiration" %> </p>
+          <% end %>
+       </div>
+        
+        <div class="col-sm-3">
+    <div class="<%= ('has-error' if @order.errors.messages[:base].each{|msg| msg}.join.include? "First") %> form-group">
+         <%= sf.label "CVV", class: "control-label input-label"  %>
+         <%= sf.text_field :cvv, value: @order.try(:credit_card).try(:cvv),class: "form-control", placeholder: "CVV" %>
+        </div>
+             <% @order.errors.messages[:base].each do |msg| %>
+  <p> <%= msg if msg.include? "Cvv" %> </p>
+     <% end %>
+        </div>
+      </div>
+    <% end %>
+<div class="row">
+<div class="col-sm-12">
+<div class="general-text-right">
+<p class="in-gold-500 font-18">Order Summary</p>
+<table class="general-summary-table general-summary-table-right general-text-right">
+<tbody><tr>
+<td>
+<p class="font-16">Subtotal:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency (current_order.subtotal - current_order.delivery.price) %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Delivery:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency current_order.delivery.price %> </p>
+</td>
+</tr>
+<tr>
+<td>
+<strong class="font-18">Order Total:</strong>
+</td>
+<td>
+<strong class="font-18"><%= number_to_currency current_order.subtotal %></strong>
+</td>
+</tr>
+</tbody></table>
+</div>
+
+</div>
+</div>
+
+
+    <div class="text-center">
+      <%= f.submit 'Save and continue', class: 'btn btn-default center-block mb-20' %>
+
+      <% end %>
+    </div>
+
+
+

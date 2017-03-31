@@ -1,0 +1,94 @@
+<div class="row mb-20">
+<div class="col-sm-6">
+<div class="visible-xs">
+<p class="general-order-number mb-0"><%= @order.number %></p>
+<p class="general-address mb-30">March 17, 2017</p>
+</div>
+<p class="general-address"><%= @user.orders.last.order_billing.first_name %><br><%= @user.orders.last.order_billing.address %><br><%= @user.orders.last.order_billing.city %><br><br><%= @user.orders.last.order_billing.phone %></p>
+</div>
+<div class="col-sm-6 hidden-xs text-right">
+<p class="general-order-number mb-0"><%= @order.number %></p>
+<p class="general-address mb-30"><%= @order.updated_at.time %></p>
+</div>
+</div>
+
+<table class="table table-hover">
+<tbody><tr class="no-hover">
+<th class="col-pic pl-0">
+<span class="in-grey-600">Book</span>
+</th>
+<th class="col-title"></th>
+<th class="col-price">
+<span class="in-grey-600">Price</span>
+</th>
+<th class="col-quantity">
+<span class="in-grey-600">Quantity</span>
+</th>
+<th class="col-total">
+<span class="in-grey-600">SubTotal</span>
+</th>
+<th class="col-close"></th>
+</tr>
+  <% @order.order_items.each do |order_item| %>
+<tr>
+<td>
+<div class="general-img-wrap-table">
+<% if order_item.book.book_attachments.any? %>
+  <% order_item.book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "cart-img-shadow pull-left width-full" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "cart-img-shadow pull-left width-full" %>
+<% end %>
+</div>
+</td>
+<td>
+<p class="general-title"><%= order_item.book.title %></p>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.unit_price %></span>
+</td>
+<td>
+<div class="input-group general-position">
+<%= order_item.quantity %>
+</div>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.total_price %></span>
+</td>
+</tr>
+  <% end %>
+  </tbody></table> 
+
+  <div class="col-sm-12">
+<div class="general-text-right">
+<p class="in-gold-500 font-18">Order Summary</p>
+<table class="general-summary-table general-summary-table-right general-text-right">
+<tbody><tr>
+<td>
+<p class="font-16">Subtotal:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency @order.order_items.collect { |oi| oi.valid? ? (oi.quantity * oi.unit_price) : 0 }.sum %></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="font-16">Delivery:</p>
+</td>
+<td>
+<p class="font-16"><%= number_to_currency @order.delivery.price %> </p>
+</td>
+</tr>
+<tr>
+<td>
+<strong class="font-18">Order Total:</strong>
+</td>
+<td>
+<strong class="font-18"><%= number_to_currency @order.subtotal %></strong>
+</td>
+</tr>
+</tbody></table>
+</div>
+
+</div>

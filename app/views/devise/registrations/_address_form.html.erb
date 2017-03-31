@@ -1,0 +1,22 @@
+
+  <%= simple_form_for :address, method: :patch, html: { id: "#{type}_address" } do |f| %>
+    <%= f.hidden_field :addressable_type, value: type %>
+    <%= f.hidden_field :addressable_id, value: user.public_send(type).try(:addressable_id) %>
+    <% [:first_name, :last_name, :addressing, :country, :city, :zipcode].each do |field| %>
+    <div class="<%= ('has-error' if error_exist? flash[type], field ) %> form-group">
+      <%= f.input field, input_html: { value: user.public_send(type).try(field), class: 'form-control'} %>
+      <span class="help-block">
+        <%= (help_block flash[type], field) %>
+      </span>
+      </div>
+    <% end %>
+    <div class="<%= ('has-error' if error_exist? flash[type], :phone ) %> form-group">
+    <%= f.input :phone, input_html: { value: user.public_send(type).try(:phone), class: 'form-control' },placeholder: '+380971112233' %>
+      <span class="help-block">
+        <%= help_block flash[type], :phone %>
+      </span>    
+    </div>
+    <div class="text-center">
+      <%= f.submit "Submit", class: 'btn btn-primary' %>
+    </div>
+  <% end %>

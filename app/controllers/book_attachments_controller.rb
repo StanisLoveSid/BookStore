@@ -1,0 +1,2 @@
+class BookAttachmentsController < ApplicationController
+end

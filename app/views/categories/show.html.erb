@@ -1,0 +1,110 @@
+<h1 class="general-title-margin">Сatalog</h1>
+<div class="hidden-xs clearfix">
+<div class="dropdown pull-right">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle dropdown-btn width-240" data-toggle="dropdown" role="button">
+<%= @filter_name %>
+<i class="fa fa-angle-down dropdown-icon"></i>
+</a>
+<ul class="dropdown-menu">
+<li><%= link_to('Newest first', {controller: "categories", action: "show", filter: "newest"}) %></li>
+<li><%= link_to('Popular first', {controller: "categories", action: "show", filter: "popular"}) %></li>
+<li><%= link_to('Price: Low to high', {controller: "categories", action: "show", filter: "from low to high"}) %></li>
+<li><%= link_to('Price: High to low', {controller: "categories", action: "show", filter: "from high to low"}) %></li>
+<li><%= link_to('Title: A-Z', {controller: "categories", action: "show", filter: "from A to Z"}) %></li>
+<li><%= link_to('Title: Z-A', {controller: "categories", action: "show", filter: "from Z to A"}) %></li>
+</ul>
+</div>
+<ul class="list-inline pt-10 mb-25 mr-240">
+<li class="mr-35">
+<%= link_to("All<span class='badge general-badge'>#{Book.all.size}</span>".html_safe ,categories_path , class: 'filter-link ') %>
+</li>
+<% @categories.each do |category| %>
+<li class="mr-35">
+<%= link_to category_path(category), class: 'filter-link' do %>
+<%=category.name%><span class='badge general-badge'><%= category.books.size %></span>
+<% end %>
+</li>
+<% end %>
+</ul>
+</div>
+<div class="visible-xs mb-40">
+<p class="in-grey-600 small mb-10">Filter by category</p>
+<div class="dropdown mb-20">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle dropdown-btn width-100" data-toggle="dropdown" role="button">
+<%= @filter_name %>
+<i class="fa fa-angle-down dropdown-icon"></i>
+</a>
+<ul class="dropdown-menu">
+<li class="mr-35">
+<%= link_to("All<span class='badge general-badge'>#{Book.all.size}</span>".html_safe ,categories_path , class: 'filter-link ') %>
+</li>
+<% @categories.each do |category| %>
+<li class="mr-35">
+<%= link_to category_path(category), class: 'filter-link' do %>
+<%=category.name%><span class='badge general-badge'><%= category.books.size %></span>
+<% end %>
+</li>
+<% end %>
+</ul>
+</div>
+<p class="in-grey-600 small mb-10">Sort by</p>
+<div class="dropdown mb-20">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle dropdown-btn width-100" data-toggle="dropdown" role="button">
+<%= @filter_name %>
+<i class="fa fa-angle-down dropdown-icon pull-right"></i>
+</a>
+<ul class="dropdown-menu">
+<li><%= link_to('Newest first', {controller: "categories", action: "show", filter: "newest"}) %></li>
+<li><%= link_to('Popular first', {controller: "categories", action: "show", filter: "popular"}) %></li>
+<li><%= link_to('Price: Low to high', {controller: "categories", action: "show", filter: "from low to high"}) %></li>
+<li><%= link_to('Price: High to low', {controller: "categories", action: "show", filter: "from high to low"}) %></li>
+<li><%= link_to('Title: A-Z', {controller: "categories", action: "show", filter: "from A to Z"}) %></li>
+<li><%= link_to('Title: Z-A', {controller: "categories", action: "show", filter: "from Z to A"}) %></li>
+</ul>
+</div>
+</div>
+<div id="books">
+<% @sorted_books.each_slice(12) do |slice| %>
+<div class="row">
+<% slice.each do |book| %>
+<div class="col-sm-6 col-md-3">
+<div class="general-thumb-wrap">
+<div class="thumbnail general-thumbnail">
+<% if book.book_attachments.any? %>
+  <% book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "img-shadow general-thumbnail-img" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img" %>
+<% end %>
+<div class="thumb-hover">
+<div class="general-thumb-link-wrap">
+<%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %>
+<%= link_to({controller: 'order_items', action: "create", order_item: {quantity: 1, book_id: book.id}}, class: 'thumb-hover-link', method: :post, remote: true) do %>
+<i class="fa fa-shopping-cart thumb-icon"></i> <% end %>
+</div>
+</div>
+</div>
+</div>
+<div class="general-thumb-info">
+<p class="title"><%= book.title %></p>
+<p class="font-16 in-gold-500"><%= number_to_currency book.price %></p>
+<span class="divider-sm"></span>
+<p class="in-grey-600 small">
+<% book.authors.each do |author| %>
+<%= author.name %>, 
+<% end %>
+</p>
+</div>
+
+</div>
+
+<% end %>
+<% end %>
+</div>
+</div>
+<div class="text-center mb-120" id="load_more_link">
+	<%= link_to_next_page @sorted_books, 'Load More', remote: true, params: { filter: params[:filter] }, class: 'btn btn-primary' %>
+</div>
+
+

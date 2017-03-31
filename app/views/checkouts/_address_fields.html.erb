@@ -1,0 +1,74 @@
+  <%= simple_fields_for "#{type}" do |s| %>
+    <%= s.simple_fields_for :address do |a| %>
+      <%= a.hidden_field :addressable_type, value: "order_#{type}" %>
+      <%= a.hidden_field :addressable_id, value: order.id %>
+
+
+      <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "First") %> form-group">
+        <%= a.input :first_name, input_html: { value: ( !user.authentications.any? ? fill_address(user, order, type, :first_name) : user.authentications.last.params[:info][:first_name]), class: 'form-control' } %>
+          <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "First" %> </p>
+     <% end %>
+  </span>
+</div>
+
+      <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "Last") %> form-group">
+        <%= a.input :last_name, input_html: { value: ( !user.authentications.any? ? fill_address(user, order, type, :last_name) : user.authentications.last.params[:info][:last_name]), class: 'form-control' } %>
+          <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "Last" %> </p>
+     <% end %>
+  </span>
+</div>
+    
+      <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "Address") %> form-group">
+        <%= a.input :addressing, input_html: { value: fill_address(user, order, type, :addressing), class: 'form-control' } %>
+          <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "Address" %> </p>
+     <% end %>
+  </span>
+</div>
+
+      <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "Country") %> form-group">
+        <%= a.input :country, input_html: { value: fill_address(user, order, type, :country), class: 'form-control' } %>
+          <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "Country" %> </p>
+     <% end %>
+  </span>
+</div>
+
+      <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "City") %> form-group">
+        <%= a.input :city, input_html: { value: fill_address(user, order, type, :city), class: 'form-control' } %>
+          <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "City" %> </p>
+     <% end %>
+  </span>
+</div>
+
+      <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "Zipcode") %> form-group">
+        <%= a.input :zipcode, input_html: { value: fill_address(user, order, type, :zipcode), class: 'form-control' } %>
+          <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "Zipcode" %> </p>
+     <% end %>
+  </span>
+</div>    
+      <div class="form-group">
+          <div class="<%= ('has-error' if order.errors.messages[:"#{type}"].each{|msg| msg}.join.include? "Phone") %> form-group">
+      <%= a.input :phone, input_html: { value: fill_address(user, order, type, :phone), class: 'form-control' }, placeholder: '+380971112233'%>
+                <span class="help-block">
+     <% order.errors.messages[:"#{type}"].each do |msg| %>
+  <p> <%= msg if msg.include? "Phone" %> </p>
+     <% end %>
+  </span>
+</div>
+      </div>
+    <% end %>
+  <% end %>
+
+
+

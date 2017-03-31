@@ -1,0 +1,17 @@
+<%= form_for([@book, @review]) do |review| %>
+<%= review.text_field :title %>
+<%= review.text_field :text_of_review %>
+   <div id="star-overall">
+    <%= review.hidden_field :rate, :id=>'hint-overall' %>
+  </div>
+<%= review.submit %>
+<% end %>
+
+<script>
+	$('#star-overall').raty({
+    target     : '#hint-overall',
+    targetType : 'score',
+    targetKeep : true
+});
+
+</script>

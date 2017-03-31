@@ -1,0 +1,12 @@
+<% if current_order.order_items.count == 0 %>
+
+
+<%= link_to cart_path, class: 'shop-link pull-right', id: "cart" do  %> <span class="shop-icon"></span><% end %>
+
+
+<% else %>
+<%= link_to cart_path, class: 'shop-link pull-right', id: "cart" do  %> <span class="shop-icon"><span class="shop-quantity"><%= current_order.order_items.size %></span></span>
+<% end %>
+
+<% end %>
+

@@ -1,0 +1,42 @@
+<tr>
+<td>
+<div class="general-img-wrap-table">
+<% if book.book_attachments.any? %>
+  <% book.book_attachments.each do |photo| %>
+  <%= image_tag photo.photo_url, class: "cart-img-shadow pull-left width-full" %>
+<% end %>
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "cart-img-shadow pull-left width-full" %>
+<% end %>
+</div>
+</td>
+<td>
+<p class="general-title"><%= book.title %></p>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.unit_price %></span>
+</td>
+<td>
+<div class="input-group general-position">
+
+<%= link_to( order_item_path(order_item, order_item: {quantity: order_item.quantity - 1, book_id: book.id}), class: 'input-link', method: :patch, remote: true) do %>
+<i class="fa fa-minus line-height-40"></i> <% end %>
+<%= oi.text_field :quantity, class: "form-control quantity-input", id: "quantity" %>
+<%= link_to( order_item_path(order_item, order_item: {quantity: order_item.quantity + 1, book_id: book.id}), class: 'input-link', method: :patch, remote: true) do %>
+<i class="fa fa-plus line-height-40"></i> <% end %>
+<%= oi.hidden_field :book_id, value: book.id %>
+
+</div>
+</td>
+<td>
+<span class="font-16 in-gold-500"><%= order_item.total_price %></span>
+</td>
+<td>
+<%= link_to order_item, method: :delete, remote: true, class: "close general-cart-close" do %><span aria-hidden="true">×</span><% end %>
+</td>
+</tr>
+
+
+
+
+

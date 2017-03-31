@@ -1,0 +1,2 @@
+$('#books').append("<%= escape_javascript(render '/categories/sorted_books')%>");
+$('#load_more_link').replaceWith("<div class='text-center mb-120' id='load_more_link'>  <%= escape_javascript(link_to_next_page @sorted_books, 'Load More', params: { filter: params[:filter] }, remote: true, class: 'btn btn-primary')%> </div> ");

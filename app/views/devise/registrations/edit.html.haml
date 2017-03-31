@@ -1,0 +1,13 @@
+= link_to 'Privacy', '', class: "general-back-link"
+:javascript
+  $('.general-back-link').on('click', function(e) {
+    e.preventDefault()
+    $(this).parent().html('#{escape_javascript render partial: 'user_form', locals: { resource: resource, resource_name: resource_name }}')
+  })
+.row
+  .col-md-5.mb-40
+    %h3.general-subtitle Billing Address
+    = render partial: 'address_form', locals: { type: :billing, user: resource }
+  .col-md-5.col-md-offset-1.mb-60
+    %h3.general-subtitle Shipping Address
+    = render partial: 'address_form', locals: { type: :shipping, user: resource }

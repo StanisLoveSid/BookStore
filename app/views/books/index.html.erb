@@ -1,0 +1,103 @@
+<div class="owl-carousel">
+<% @books.last(3).each do |book| %>
+<div class="carousel">
+<div class="item next left">
+<div class="row">
+<div class="col-sm-5">
+<div class="general-img-wrap">
+<% if book.book_attachments.any? %>
+
+    <%= image_tag book.book_attachments.first.photo, class: "img-shadow general-thumbnail-img width-full" %>
+
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img width-full" %>
+<% end %>
+</div>
+</div>
+<div class="col-sm-7">
+<div class="mb-60">
+<h1><%= book.title %></h1>
+<p class="lead">
+<% if book.description.length > 250 %>
+    <%= truncate(book.description, length: 250) %>
+    <%= link_to '...Read more', '', class: "read-more-#{book.id}" %>
+    <script>
+      $('.read-more-<%= book.id %>').on('click', function(e) {
+        e.preventDefault()
+        $(this).parent().html('<%= escape_javascript book.description %>')
+      })
+    </script>
+  <% else %>
+    <%= book.description %>
+  <% end %>
+</p>
+
+<p class="in-grey-600 small">
+<% book.authors.each do |author| %>
+<%= author == book.authors.last ? author.name : author.name + "," %>
+<% end %>
+</p>
+
+<div class="general-align pt-20">
+<%= form_for @order_item, remote: true do |f| %>
+<%= f.hidden_field :quantity, value: 1 %>
+<%= f.hidden_field :book_id, value: book.id %>
+<%= f.submit "Buy now", class: "btn btn-default" %>
+</div>
+<% end %>
+</div>
+</div>
+</div>
+</div>
+</div>
+<% end %>
+</div>
+
+<div class="jumbotron text-center mb-0">
+<h2 class="h1">Welcome to our amazing Bookstore!</h2>
+<div class="mb-res-50">
+<p class="in-grey-600">We pore through hundreds of new books each month and select the five best we can find to share with our members.</p>
+</div>
+<%= link_to "Get started", categories_path, class: 'btn btn-default' %>
+</div>
+<div class="mb-35">
+<h3>Best Sellers</h3>
+<% @sorted_books.first(4).each do |book| %>
+<div class="row">
+<div class="col-sm-6 col-md-3">
+<div class="general-thumb-wrap">
+<div class="thumbnail general-thumbnail">
+<% if book.book_attachments.any? %>
+ 
+  <%= image_tag book.book_attachments.first.photo, class: "img-shadow general-thumbnail-img" %>
+
+  <% else %> 
+<%= image_tag 'cover_default.png', class: "img-shadow general-thumbnail-img" %>
+<% end %>
+<div class="thumb-hover">
+<div class="general-thumb-link-wrap">
+<%= link_to book_path(book), class: "thumb-hover-link" do %><i aria-hidden="true" class="fa fa-eye thumb-icon"></i> <% end %> 
+<%= link_to({controller: 'order_items', action: "create", order_item: {quantity: 1, book_id: book.id}}, class: 'thumb-hover-link', method: :post, remote: true) do %>
+<i class="fa fa-shopping-cart thumb-icon"></i> <% end %>
+</div>
+</div>
+</div>
+</div>
+<div class="general-thumb-info">
+<p class="title"><%= book.title %></p>
+<p class="font-16 in-gold-500"><%= number_to_currency book.price %></p>
+<span class="divider-sm"></span>
+<p class="in-grey-600 small">
+<% book.authors.each do |author| %>
+<%= author.name %>, 
+<% end %>
+</p>
+</div>
+
+</div>
+<% end %>
+
+
+<script>
+	$(".owl-carousel").owlCarousel({ autoPlay: 5000, items: 1 });
+</script>

@@ -1,0 +1,14 @@
+.text-center
+  %h1.mb-30= t('simple_form.titles.forgot_password?')
+  %p.general-password-text
+    Recoverable instructions will be sent
+= simple_form_for(resource,
+  as: resource_name,
+  url: password_path(resource_name),
+  html: { method: :post }) do |field|
+  .form-group.mb-25
+    = field.text_field :email, autocomplete: 'true', placeholder: "Enter email",
+      label: false, class: 'form-control'
+  = field.button :submit, "Send email instructions", class: 'btn btn-default center-block mb-20'
+  .text-center
+    = link_to t('cancel'), :back, class: 'in-gold-500 mb-20'

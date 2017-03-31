@@ -1,0 +1,36 @@
+<p>
+<% @a_to_z_books.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+</p>
+
+<p>
+<% @z_to_a_books.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+</p>
+
+<p>
+<% @popular_books.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+</p>
+
+<p>
+<% @newest_books.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+</p>
+
+<p>
+<% @high_price.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+</p>
+
+
+<p>
+<% @low_price.each do |book| %>
+<%= link_to book.title, book_path(book) %>
+<% end %>
+</p>
